@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>이승민 포트폴리오</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:#111;font-size:16px;overflow:hidden;}
+.page{display:none;width:100vw;height:100vh;}
+.page.active{display:flex;}
+
+/* ─── BADGE ─── */
+.badge{display:inline-block;background:#E3F2FD;color:#1565C0;border:1.5px solid #1565C0;border-radius:4px;padding:3px 12px;font-size:13px;font-weight:700;margin:3px 2px;}
+
+/* ─── DIVIDERS ─── */
+.v-div{width:3px;background:#1565C0;flex-shrink:0;}
+
+/* ══════════════════════════════════════════════
+   MAIN PAGE
+══════════════════════════════════════════════ */
+#page-main{flex-direction:row;}
+
+/* LEFT PROFILE */
+.profile-panel{
+  width:340px;flex-shrink:0;padding:28px 22px;
+  overflow-y:auto;display:flex;flex-direction:column;align-items:center;gap:18px;
+}
+.profile-photo{width:140px;height:170px;object-fit:cover;border:3px solid #1565C0;border-radius:8px;}
+.profile-name{font-size:28px;font-weight:900;letter-spacing:2px;}
+.profile-meta{font-size:15px;color:#555;}
+
+.p-card{width:100%;border:2px solid #1565C0;border-radius:8px;padding:14px 16px;}
+.p-card-head{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:700;color:#1565C0;margin-bottom:8px;}
+.p-card-head svg{width:22px;height:22px;flex-shrink:0;fill:#1565C0;}
+.p-card-body{font-size:15px;color:#222;line-height:1.7;}
+.skill-row{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;}
+
+/* RIGHT PROJECTS */
+.projects-panel{
+  flex:1;padding:32px 28px;overflow-y:auto;
+  display:flex;flex-direction:column;gap:0;
+}
+.proj-section-title{
+  font-size:22px;font-weight:900;color:#1565C0;
+  border-bottom:3px solid #1565C0;padding-bottom:8px;margin-bottom:20px;
+}
+.proj-row{
+  border:2px solid #1565C0;border-radius:10px;
+  padding:22px 24px;cursor:pointer;
+  transition:background .15s,transform .1s;
+  background:#fff;margin-bottom:18px;
+}
+.proj-row:hover{background:#EBF5FF;transform:translateX(6px);}
+.proj-row-num{font-size:13px;color:#1565C0;font-weight:700;letter-spacing:1px;margin-bottom:4px;}
+.proj-row-title{font-size:21px;font-weight:900;color:#1565C0;margin-bottom:10px;}
+.proj-row-desc{font-size:15px;line-height:1.9;color:#222;margin-bottom:12px;padding-left:4px;}
+.proj-row-desc ul{padding-left:20px;}
+.proj-row-empty{
+  border:2px dashed #aac4e8;border-radius:10px;
+  padding:28px 24px;color:#999;font-size:16px;text-align:center;
+  background:#fafcff;margin-bottom:18px;
+}
+
+/* ══════════════════════════════════════════════
+   DETAIL PAGE
+══════════════════════════════════════════════ */
+.detail-page{flex-direction:row;}
+.detail-left{
+  width:270px;flex-shrink:0;padding:32px 22px;
+  display:flex;flex-direction:column;gap:10px;overflow-y:auto;
+}
+.d-label{font-size:12px;font-weight:700;color:#1565C0;letter-spacing:1.5px;text-transform:uppercase;}
+.d-proj-name{font-size:22px;font-weight:900;line-height:1.4;margin-top:2px;}
+.d-period-block{margin-top:12px;}
+.d-period{font-size:15px;color:#444;line-height:1.8;}
+.detail-right{
+  flex:1;padding:32px 28px;display:flex;flex-direction:column;gap:16px;overflow-y:auto;
+}
+.d-back-btn{
+  display:flex;align-items:center;gap:8px;
+  padding:12px 20px;border:2px solid #888;border-radius:8px;
+  cursor:pointer;font-size:16px;font-weight:700;color:#555;
+  background:#fff;width:fit-content;
+  transition:background .15s;
+}
+.d-back-btn:hover{background:#f0f0f0;}
+.d-nav-row{
+  border:2px solid #1565C0;border-radius:10px;
+  padding:20px 24px;cursor:pointer;
+  transition:background .15s;flex:1;min-height:120px;
+}
+.d-nav-row:hover{background:#EBF5FF;}
+.d-nav-title{font-size:19px;font-weight:900;color:#1565C0;margin-bottom:8px;}
+.d-nav-desc{font-size:14px;color:#444;margin-bottom:10px;}
+.d-rows-flex{flex:1;display:flex;flex-direction:column;gap:16px;}
+
+/* ══════════════════════════════════════════════
+   SUBPAGE (diagram / program)
+══════════════════════════════════════════════ */
+.subpage{flex-direction:column;}
+.sp-header{
+  display:flex;align-items:center;gap:16px;
+  padding:14px 28px;border-bottom:3px solid #1565C0;
+  flex-shrink:0;background:#fff;
+}
+.sp-back{
+  display:flex;align-items:center;gap:6px;
+  padding:8px 18px;border:2px solid #1565C0;border-radius:6px;
+  background:#fff;color:#1565C0;font-size:15px;font-weight:700;
+  cursor:pointer;font-family:'Noto Sans KR',sans-serif;
+}
+.sp-back:hover{background:#EBF5FF;}
+.sp-title{font-size:20px;font-weight:900;color:#111;}
+
+/* Tabs */
+.tabs{
+  display:flex;padding:0 28px;
+  border-bottom:2px solid #1565C0;flex-shrink:0;background:#fff;
+}
+.tab{
+  padding:12px 28px;font-size:16px;font-weight:700;cursor:pointer;
+  border-bottom:3px solid transparent;margin-bottom:-2px;color:#888;
+  font-family:'Noto Sans KR',sans-serif;transition:color .15s;
+}
+.tab.active{color:#1565C0;border-bottom-color:#1565C0;}
+.tab-pane{display:none;flex:1;overflow-y:auto;padding:28px;flex-direction:column;gap:20px;}
+.tab-pane.active{display:flex;}
+
+/* ── Diagram container ── */
+.diag-wrap{
+  border:3px solid #1565C0;border-radius:12px;
+  padding:28px;background:#fff;
+}
+.diag-spec{font-size:15px;color:#333;font-weight:500;margin-bottom:16px;}
+.diag-spec b{color:#c62828;}
+.diag-title{
+  display:inline-block;border:2px solid #111;
+  padding:6px 18px;font-size:19px;font-weight:900;margin-bottom:22px;
+}
+.diag-row{display:flex;align-items:center;flex-wrap:wrap;gap:0;margin-bottom:14px;}
+.diag-node{
+  border:2px solid #111;padding:10px 14px;
+  font-size:15px;font-weight:700;text-align:center;
+  min-width:110px;background:#fff;line-height:1.4;
+}
+.arr{color:#1565C0;font-size:22px;font-weight:900;padding:0 4px;flex-shrink:0;}
+.diag-photos{
+  display:flex;gap:32px;margin-top:24px;align-items:flex-end;flex-wrap:wrap;
+}
+.diag-photo{display:flex;flex-direction:column;align-items:center;gap:6px;}
+.diag-photo img{max-height:130px;max-width:175px;object-fit:contain;}
+.diag-photo span{font-size:14px;color:#333;font-weight:500;}
+
+/* ── Flowchart popup ── */
+.pop-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.55);z-index:999;
+  align-items:center;justify-content:center;
+}
+.pop-overlay.open{display:flex;}
+.pop-box{
+  background:#fff;border:3px solid #1565C0;border-radius:12px;
+  padding:28px 32px;max-width:97vw;max-height:92vh;
+  overflow:auto;position:relative;
+}
+.pop-close{
+  position:absolute;top:10px;right:16px;font-size:26px;
+  cursor:pointer;background:none;border:none;color:#555;
+  font-family:'Noto Sans KR',sans-serif;line-height:1;
+}
+.pop-title{font-size:18px;font-weight:900;color:#1565C0;margin-bottom:22px;}
+
+/* ══════════════════════════════════════════════
+   MFC PROGRAM PAGE
+══════════════════════════════════════════════ */
+.mfc-wrap{
+  flex:1;display:flex;flex-direction:column;
+  background:#c0c0c0;overflow:hidden;
+}
+.mfc-titlebar{
+  background:linear-gradient(to right,#0a246a,#7a9dd0);
+  color:#fff;font-size:15px;font-weight:700;
+  padding:5px 12px;display:flex;align-items:center;gap:8px;flex-shrink:0;
+}
+.mfc-body{flex:1;display:flex;flex-direction:column;padding:10px;gap:10px;overflow:hidden;}
+.mfc-row{display:flex;gap:10px;flex-shrink:0;}
+.mfc-grp{
+  border:2px solid;border-color:#808080 #fff #fff #808080;
+  padding:10px 14px 8px;background:#d4d0c8;position:relative;
+}
+.mfc-grp-lbl{
+  position:absolute;top:-11px;left:10px;
+  background:#d4d0c8;padding:0 6px;
+  font-size:13px;font-weight:700;color:#111;
+}
+.mfc-btn{
+  padding:5px 18px;background:#d4d0c8;
+  border:2px solid;border-color:#fff #808080 #808080 #fff;
+  font-size:14px;font-weight:700;cursor:pointer;
+  font-family:'Noto Sans KR',sans-serif;color:#111;
+  min-width:90px;text-align:center;display:inline-block;
+}
+.mfc-btn:active{border-color:#808080 #fff #fff #808080;}
+.mfc-btn.blue{background:#0a246a;color:#fff;border-color:#4060c0 #001040 #001040 #4060c0;}
+.mfc-btn.red{background:#7B0000;color:#fff;border-color:#c04040 #3a0000 #3a0000 #c04040;}
+.mfc-btn.green{background:#006400;color:#fff;border-color:#40c040 #003000 #003000 #40c040;}
+.mfc-input{
+  border:2px solid;border-color:#808080 #fff #fff #808080;
+  background:#fff;padding:3px 8px;font-size:14px;
+  font-family:'Noto Sans KR',sans-serif;width:72px;color:#111;
+}
+.mfc-led{
+  border:2px solid;border-color:#808080 #fff #fff #808080;
+  background:#111;color:#00ff41;
+  padding:3px 10px;font-size:15px;font-weight:700;
+  min-width:72px;text-align:right;font-family:monospace;
+  display:inline-block;
+}
+.mfc-lbl{font-size:13px;font-weight:700;color:#333;margin-bottom:3px;display:block;}
+.mfc-inrow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.mfc-axis-grid{display:grid;grid-template-columns:auto auto auto auto;gap:6px 16px;align-items:center;}
+.mfc-ctrl-col{display:flex;flex-direction:column;gap:8px;justify-content:center;}
+.mfc-log-area{flex:1;display:flex;flex-direction:column;min-height:0;}
+.mfc-log{
+  flex:1;border:2px solid;border-color:#808080 #fff #fff #808080;
+  background:#111;color:#00ff41;font-family:monospace;
+  font-size:13px;padding:8px;overflow-y:auto;line-height:1.7;
+}
+.mfc-log-btns{display:flex;gap:8px;padding-top:6px;justify-content:flex-end;}
+.axis-badge{
+  background:#1565C0;color:#fff;padding:2px 8px;
+  font-size:12px;font-weight:700;border-radius:3px;
+}
+</style>
+</head>
+<body>
+
+<!-- ████████████████████████████████████████████
+     PAGE: MAIN
+████████████████████████████████████████████ -->
+<div id="page-main" class="page active">
+  <!-- LEFT -->
+  <div class="profile-panel">
+    <img class="profile-photo" src="images/me_pic.jpg" alt="프로필 사진">
+    <div class="profile-name">이승민</div>
+    <div class="profile-meta">남 · 1994년생 (31세)</div>
+
+    <!-- 경력 -->
+    <div class="p-card">
+      <div class="p-card-head">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 6h-2.18c.07-.44.18-.88.18-1.34C18 2.99 16.21 1 14 1c-1.22 0-2.35.5-3.16 1.32L10 3.15l-.84-.83C8.35 1.5 7.22 1 6 1 3.79 1 2 2.99 2 5.34c0 .46.11.9.18 1.34H0v14h24V6h-4zm-6-3c.9 0 1.63.7 1.63 1.56S14.9 6.1 14 6.1H10.56c.06-.15.1-.31.14-.47L11 5.15V5c0-.9.73-1.63 1.63-1.63h.74zM6 3.37c.9 0 1.63.73 1.63 1.63v.15l.3.48c.04.16.08.32.14.47H4.37C3.47 6.1 2.74 5.36 2.74 4.46S3.1 3 4 3h2zM22 18H2V8h20v10z"/>
+        </svg>
+        경력
+      </div>
+      <div class="p-card-body">총 <b>3년 5개월</b></div>
+    </div>
+
+    <!-- 학력 -->
+    <div class="p-card">
+      <div class="p-card-head">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/>
+        </svg>
+        학력
+      </div>
+      <div class="p-card-body">고려대학교 (안암)<br>학부 4년 졸업</div>
+    </div>
+
+    <!-- 스킬 -->
+    <div class="p-card">
+      <div class="p-card-head">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/>
+        </svg>
+        스킬
+      </div>
+      <div class="p-card-body">
+        <div class="skill-row">
+          <span class="badge">장비 제어</span>
+          <span class="badge">드라이버 개발</span>
+          <span class="badge">제어 프로그램 연동</span>
+        </div>
+        <div class="skill-row" style="margin-top:6px;">
+          <span class="badge">웹 API</span>
+          <span class="badge">ASP.NET</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DIVIDER -->
+  <div class="v-div"></div>
+
+  <!-- RIGHT PROJECTS -->
+  <div class="projects-panel">
+    <div class="proj-section-title">프로젝트</div>
+
+    <!-- Row 1 -->
+    <div class="proj-row" onclick="showPage('page-detail-z')">
+      <div class="proj-row-num">PROJECT 01</div>
+      <div class="proj-row-title">웨이퍼 Z축 스테이지 제어</div>
+      <div class="proj-row-desc">
+        <ul>
+          <li>엔코더 기반 Z축 모션 제어 구현</li>
+          <li>반복 횟수 및 이동 높이 설정 기능 개발</li>
+          <li>듀얼 모터 동기화 오차 개선 및 안정화</li>
+          <li>자동 반복 시퀀스 오류 수정 및 반복 동작 안정성 확보</li>
+          <li>오류 로그 분석을 통한 완료 타이밍 문제 해결</li>
+        </ul>
+      </div>
+      <div>
+        <span class="badge">장비 제어</span>
+        <span class="badge">드라이버 개발</span>
+        <span class="badge">모션 제어</span>
+      </div>
+    </div>
+
+    <!-- Row 2 -->
+    <div class="proj-row" onclick="showPage('page-detail-robot')">
+      <div class="proj-row-num">PROJECT 02</div>
+      <div class="proj-row-title">자율주행차 모터 및 센서 연동</div>
+      <div class="proj-row-desc">
+        <ul>
+          <li>키보드 입력 데이터를 모터 제어 신호로 변환하여 모터 드라이버 및 모터 회전 제어 구현</li>
+          <li>2D LiDAR 센서 RAW 데이터 파싱 및 2D 지도 변환 기능 구현</li>
+          <li>변환된 지도 데이터를 UI 및 RViz 프로그램과 연동하여 실시간 시각화 구현</li>
+        </ul>
+      </div>
+      <div>
+        <span class="badge">임베디드</span>
+        <span class="badge">센서 파싱</span>
+        <span class="badge">자율주행</span>
+      </div>
+    </div>
+
+    <!-- Row 3 (empty) -->
+    <div class="proj-row-empty">
+      PROJECT 03 &nbsp;·&nbsp; 내용을 추가해주세요
+    </div>
+  </div>
+</div>
+
+
+<!-- ████████████████████████████████████████████
+     PAGE: DETAIL — Z축
+████████████████████████████████████████████ -->
+<div id="page-detail-z" class="page detail-page">
+  <div class="detail-left">
+    <div style="margin-bottom:8px;">
+      <div class="d-label">프로젝트</div>
+      <div class="d-proj-name">웨이퍼 Z축 스테이지 제어</div>
+    </div>
+    <div style="height:3px;background:#1565C0;width:100%;border-radius:2px;"></div>
+    <div class="d-period-block">
+      <div class="d-label">기간</div>
+      <div class="d-period">4개월<br>2023.06 ~ 2023.10</div>
+    </div>
+  </div>
+  <div class="v-div"></div>
+  <div class="detail-right">
+    <div class="d-back-btn" onclick="showPage('page-main')">← 메인으로 돌아가기</div>
+    <div class="d-nav-row" style="flex:1;" onclick="showPage('page-diag-z')">
+      <div class="d-nav-title">📐 구성도</div>
+      <div class="d-nav-desc">시스템 구성 및 동작 흐름도를 확인합니다.</div>
+      <span class="badge">모니터링</span>
+      <span class="badge">폐루프 제어</span>
+    </div>
+    <div class="d-nav-row" style="flex:1;" onclick="showPage('page-prog-z')">
+      <div class="d-nav-title">💻 프로그램</div>
+      <div class="d-nav-desc">테스트 프로그램 UI를 확인합니다.</div>
+      <span class="badge">이더넷</span>
+      <span class="badge">시퀀스 플로우</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ████████████████████████████████████████████
+     PAGE: DIAGRAM — Z축
+████████████████████████████████████████████ -->
+<div id="page-diag-z" class="page subpage">
+  <div class="sp-header">
+    <button class="sp-back" onclick="showPage('page-detail-z')">← 돌아가기</button>
+    <span class="sp-title">웨이퍼 Z축 스테이지 제어 — 구성도</span>
+  </div>
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab(this,'tab-z-diag')">구성도</div>
+    <div class="tab" onclick="switchTab(this,'tab-z-flow')">흐름도</div>
+  </div>
+
+  <!-- TAB: 구성도 -->
+  <div id="tab-z-diag" class="tab-pane active">
+    <div class="diag-wrap">
+      <div class="diag-spec">스펙 요약 : 모션 컨트롤러 1대, <b>서보 드라이버 2대</b>, <b>엔코더 서보 2개</b></div>
+      <div class="diag-title">구성도</div>
+      <div class="diag-row">
+        <div class="diag-node" style="background:#EBF5FF;min-width:130px;">모션 컨트롤러<br>양산품</div>
+        <span class="arr">→</span>
+        <div class="diag-node">서보 드라이버1<br>MEL서보</div>
+        <span class="arr">→</span>
+        <div class="diag-node">엔코더 모터1<br>AC 서보</div>
+        <span class="arr">→</span>
+        <div class="diag-node">웨이퍼 스테이지<br>1번 축</div>
+      </div>
+      <div style="display:flex;margin-bottom:4px;">
+        <div style="width:65px;flex-shrink:0;"></div>
+        <span style="color:#1565C0;font-size:20px;margin-left:44px;">↓</span>
+      </div>
+      <div class="diag-row">
+        <div class="diag-node" style="min-width:130px;background:#fff0f0;">이더넷</div>
+        <span class="arr" style="color:transparent;">→</span>
+        <div class="diag-node">서보 드라이버2<br>MEL서보</div>
+        <span class="arr">→</span>
+        <div class="diag-node">엔코더 모터2<br>AC 서보</div>
+        <span class="arr">→</span>
+        <div class="diag-node">웨이퍼 스테이지<br>2번 축</div>
+      </div>
+      <div style="color:#1565C0;font-size:20px;margin-left:44px;margin-bottom:4px;">↑</div>
+      <div class="diag-row">
+        <div class="diag-node" style="min-width:130px;background:#f5f5f5;">PC 입력<br>테스트 프로그램</div>
+      </div>
+      <div class="diag-photos">
+        <div class="diag-photo">
+          <img src="images/z_servo_driver.png" alt="서보드라이버">
+          <span>서보 드라이버 (MEL서보)</span>
+        </div>
+        <div class="diag-photo">
+          <img src="images/z_encoder_motor.png" alt="엔코더모터">
+          <span>엔코더 모터 (AC 서보)</span>
+        </div>
+        <div class="diag-photo">
+          <img src="images/z_motion.png" alt="Z-MOTION">
+          <span>2중 모션 (Z축)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: 흐름도 -->
+  <div id="tab-z-flow" class="tab-pane">
+    <div style="margin-bottom:16px;">
+      <button class="mfc-btn blue" style="font-size:15px;padding:10px 28px;" onclick="document.getElementById('pop-flow').classList.add('open')">
+        ▶ 흐름도 보기
+      </button>
+    </div>
+    <div style="border:2px solid #1565C0;border-radius:10px;padding:24px;background:#fafcff;">
+      <div style="font-size:17px;font-weight:700;color:#1565C0;margin-bottom:16px;">동작 시퀀스 설명</div>
+      <div style="font-size:15px;line-height:2.0;color:#222;">
+        <b>1. 초기화</b> — Servo ON → Home Move → Wait Home Complete<br>
+        <b>2. 자동 사이클</b> — Auto Cycle Start 후 Z축 상대위치 이동<br>
+        <b>3. 위치 확인</b> — Encoder Position Polling → Z1/Z2 InPosition Check<br>
+        <b>4. 반복 처리</b> — Delay → Move Z Down → 엔코더 피드백 → 횟수 증가<br>
+        <b>5. 종료 판정</b> — 반복 횟수 도달 시 Complete, 미도달 시 사이클 재시작
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FLOWCHART POPUP -->
+<div id="pop-flow" class="pop-overlay">
+  <div class="pop-box">
+    <button class="pop-close" onclick="document.getElementById('pop-flow').classList.remove('open')">✕</button>
+    <div class="pop-title">웨이퍼 Z축 — 동작 흐름도 (Sequence Flow)</div>
+    <svg viewBox="0 0 1680 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;min-width:900px;font-family:'Noto Sans KR',sans-serif;">
+      <defs>
+        <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 Z" fill="#1565C0"/>
+        </marker>
+      </defs>
+      <rect x="10" y="74" width="90" height="52" rx="6" fill="#1565C0" stroke="#1565C0" stroke-width="2"/>
+      <text x="55" y="104" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">START</text>
+      <line x1="100" y1="100" x2="118" y2="100" stroke="#1565C0" stroke-width="2" marker-end="url(#arr)"/>
+      <rect x="120" y="74" width="108" height="52" rx="4" fill="#fff" stroke="#1565C0" stroke-width="2"/>
+      <text x="174" y="104" text-anchor="middle" fill="#111" font-size="13" font-weight="700">Servo ON</text>
+      <line x1="228" y1="100" x2="246" y2="100" stroke="#1565C0" stroke-width="2" marker-end="url(#arr)"/>
+      <rect x="248" y="74" width="108" height="52" rx="4" fill="#fff" stroke="#1565C0" stroke-width="2"/>
+      <text x="302" y="104" text-anchor="middle" fill="#111" font-size="13" font-weight="700">Home Move</text>
+      <line x1="356" y1="100" x2="374" y2="100" stroke="#1565C0" stroke-width="2" marker-end="url(#arr)"/>
+      <rect x="376" y="74" width="128" height="52" rx="4" fill="#fff" stroke="#1565C0" stroke-width="2"/>
+      <text x="440" y="93" text-anchor="middle" fill="#111" font-size="12" font-weight="700">Wait Home</text>
+      <text x="440" y="113" text-anchor="middle" fill="#111" font-size="12" font-weight="700">Complete</text>
+      <line x1="504" y1="100" x2="522" y2="100" stroke="#1565C0" stroke-width="2" marker-end="url(#arr)"/>
+      <rect x="524" y="74" width="128" height="52" rx="4" fill="#EBF5FF" stroke="#1565C0" stroke-width="2.5"/>
+      <text x="588" y="93" text-anchor="middle" fill="#1565C0" font-size="12" font-weight="900">Auto Cycle</text>
+      <text x="588" y="113" text-anchor="middle" fill="#1565C0" font-size="12" font-weight="900">Start</text>
+      <line x1="652" y1="100" x2="670" y2="100" stroke="#1565C0" stroke-width="2" marker-end="url(#arr)"/>
+      <rect x="672" y="74" width="108" height="52" rx="4" fill="#fff" stroke="#1565C0" stroke-width="2"/>
+      <text x="726" y="93" text-anchor="middle" fill="#111" font-size="12" font-weight="700">Move Z Up</text>
+      <text x="726" y="113" text-anchor="middle" fill="#555" font-size="11">(상대위치)</text>
+      <line x1="780" y1="100" x2="798" y2="100" stroke="#1565C0" stroke-width="2" marker-end="url(#arr)"/>
+      <rect x="800" y="74" width="118" height="52" rx="4" fill="#fff" stroke="#1565C0" stroke-width="2"/>
+      <text x="859" y="93" text-anchor="middle" fill="#111" font-size="11" font-weight="700">Encoder Pos</text>
+      <text x="859" y="113" text-anchor="middle" fill="#111" font-size="11" font-weight="700">Polling</text>
+      <line x1="918" y1="100" x2="936" y2="100" stroke="#1565C0" stroke-width="2" marker-end="url(#arr)"/>
+      <rect x="938" y="74" width="118" height="52" rx="4" fill="#fff" stroke="#1565C0" stroke-width="2"/>
+      <text x="997" y="93" text-anchor="middle" fill="#111" font-size="11" font-weight="700">Z1/Z2</text>
+      <text x="997" y="113" text-anchor="middle" fill="#111" font-size="11" font-weight="700">InPos Check</text>
+      <line x1="1056" y1="100" x2="1074" y2="100" stroke="#1565C0" stroke-width="2" marker-end="url(#arr)"/>
+      <rect x="1076" y="74" width="88" height="52" rx="4" fill="#fff" stroke="#1565C0" stroke-width="2"/>
+      <text x="1120" y="104" text-anchor="middle" fill="#111" font-size="13" font-weight="700">Delay</text>
+      <line x1="1164" y1="100" x2="1182" y2="100" stroke="#1565C0" stroke-width="2" marker-end="url(#arr)"/>
+      <rect x="1184" y="74" width="108" height="52" rx="4" fill="#fff" stroke="#1565C0" stroke-width="2"/>
+      <text x="1238" y="93" text-anchor="middle" fill="#111" font-size="12" font-weight="700">Move Z Down</text>
+      <line x1="1292" y1="100" x2="1310" y2="100" stroke="#1565C0" stroke-width="2" marker-end="url(#arr)"/>
+      <rect x="1312" y="74" width="108" height="52" rx="4" fill="#fff" stroke="#1565C0" stroke-width="2"/>
+      <text x="1366" y="93" text-anchor="middle" fill="#111" font-size="11" font-weight="700">엔코더 위치</text>
+      <text x="1366" y="113" text-anchor="middle" fill="#111" font-size="11" font-weight="700">피드백</text>
+      <line x1="1420" y1="100" x2="1438" y2="100" stroke="#1565C0" stroke-width="2" marker-end="url(#arr)"/>
+      <rect x="1440" y="74" width="108" height="52" rx="4" fill="#fff" stroke="#1565C0" stroke-width="2"/>
+      <text x="1494" y="97" text-anchor="middle" fill="#111" font-size="13" font-weight="700">반복횟수</text>
+      <text x="1494" y="116" text-anchor="middle" fill="#111" font-size="13" font-weight="700">증가 ++</text>
+      <line x1="1548" y1="100" x2="1566" y2="100" stroke="#1565C0" stroke-width="2" marker-end="url(#arr)"/>
+      <polygon points="1620,74 1672,100 1620,126 1568,100" fill="#FFF8E1" stroke="#1565C0" stroke-width="2.5"/>
+      <text x="1620" y="95" text-anchor="middle" fill="#111" font-size="10" font-weight="700">반복 횟수</text>
+      <text x="1620" y="109" text-anchor="middle" fill="#111" font-size="10" font-weight="700">도달 여부?</text>
+      <line x1="1672" y1="100" x2="1694" y2="100" stroke="#1565C0" stroke-width="2" marker-end="url(#arr)"/>
+      <text x="1680" y="93" fill="#006400" font-size="11" font-weight="700">Yes</text>
+      <rect x="1696" y="74" width="88" height="52" rx="6" fill="#1565C0" stroke="#1565C0" stroke-width="2"/>
+      <text x="1740" y="104" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">완료</text>
+      <line x1="1620" y1="126" x2="1620" y2="175" stroke="#1565C0" stroke-width="2"/>
+      <line x1="1620" y1="175" x2="588" y2="175" stroke="#1565C0" stroke-width="2"/>
+      <line x1="588" y1="175" x2="588" y2="127" stroke="#1565C0" stroke-width="2" marker-end="url(#arr)"/>
+      <text x="1100" y="170" text-anchor="middle" fill="#c62828" font-size="12" font-weight="700">No → 다음 반복 시작</text>
+    </svg>
+  </div>
+</div>
+
+
+<!-- ████████████████████████████████████████████
+     PAGE: PROGRAM — Z축 MFC UI
+████████████████████████████████████████████ -->
+<div id="page-prog-z" class="page" style="flex-direction:column;">
+  <div class="sp-header">
+    <button class="sp-back" onclick="showPage('page-detail-z')">← 돌아가기</button>
+    <span class="sp-title">웨이퍼 Z축 스테이지 제어 — 테스트 프로그램</span>
+  </div>
+  <div style="flex:1;display:flex;flex-direction:column;padding:12px;background:#c0c0c0;overflow:hidden;">
+    <div class="mfc-wrap" style="border:2px solid #808080;border-radius:2px;">
+      <div class="mfc-titlebar">🖥️ &nbsp;웨이퍼 Z축 스테이지 제어 프로그램 &nbsp;—&nbsp; v1.0</div>
+      <div class="mfc-body">
+        <div class="mfc-row" style="align-items:stretch;gap:12px;">
+          <div class="mfc-grp" style="min-width:220px;">
+            <span class="mfc-grp-lbl">장비 통신</span>
+            <div style="display:flex;gap:8px;margin-top:6px;">
+              <button class="mfc-btn blue" onclick="logMsg('통신 연결 시도...')">통신 연결</button>
+              <button class="mfc-btn red" onclick="logMsg('통신 해제됨.')">통신 해제</button>
+            </div>
+            <div style="margin-top:8px;display:flex;align-items:center;gap:6px;">
+              <span class="mfc-lbl" style="margin:0;">상태:</span>
+              <span id="conn-status" style="font-size:13px;font-weight:700;color:#006400;">● 연결됨</span>
+            </div>
+          </div>
+          <div class="mfc-grp" style="flex:1;">
+            <span class="mfc-grp-lbl">제어 조건</span>
+            <div class="mfc-inrow" style="margin-top:6px;gap:20px;">
+              <div>
+                <span class="mfc-lbl">반복횟수 지정</span>
+                <input class="mfc-input" type="number" value="10" min="1" max="9999" id="rep-input">
+              </div>
+              <div>
+                <span class="mfc-lbl">현재 반복횟수</span>
+                <span class="mfc-led" id="rep-cur">0000</span>
+              </div>
+              <div>
+                <span class="mfc-lbl">이동 높이 (pulse)</span>
+                <input class="mfc-input" type="number" value="5000" style="width:88px;">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mfc-row" style="align-items:stretch;gap:12px;">
+          <div class="mfc-grp" style="flex:1;">
+            <span class="mfc-grp-lbl">1번 축 &nbsp;<span class="axis-badge">AXIS 1</span></span>
+            <div class="mfc-axis-grid" style="margin-top:10px;">
+              <span class="mfc-lbl">현재 위치</span>
+              <span class="mfc-led" id="ax1-pos">+00000</span>
+              <span class="mfc-lbl">동작 상태</span>
+              <span class="mfc-led" style="color:#ffcc00;" id="ax1-stat">IDLE</span>
+              <span class="mfc-lbl">동기화</span>
+              <span class="mfc-led" style="color:#00ff41;" id="ax1-sync">OK</span>
+            </div>
+          </div>
+          <div class="mfc-grp" style="flex:1;">
+            <span class="mfc-grp-lbl">2번 축 &nbsp;<span class="axis-badge">AXIS 2</span></span>
+            <div class="mfc-axis-grid" style="margin-top:10px;">
+              <span class="mfc-lbl">현재 위치</span>
+              <span class="mfc-led" id="ax2-pos">+00000</span>
+              <span class="mfc-lbl">동작 상태</span>
+              <span class="mfc-led" style="color:#ffcc00;" id="ax2-stat">IDLE</span>
+              <span class="mfc-lbl">동기화</span>
+              <span class="mfc-led" style="color:#00ff41;" id="ax2-sync">OK</span>
+            </div>
+          </div>
+          <div class="mfc-ctrl-col" style="padding-top:10px;">
+            <button class="mfc-btn green" style="font-size:16px;padding:12px 24px;" onclick="startCycle()">▶ 시작</button>
+            <button class="mfc-btn red" style="font-size:16px;padding:12px 24px;" onclick="stopCycle()">■ 정지</button>
+            <button class="mfc-btn" style="font-size:14px;padding:10px 20px;" onclick="homeMove()">↩ 원점 복귀</button>
+          </div>
+        </div>
+        <div class="mfc-log-area">
+          <div class="mfc-grp" style="flex:1;display:flex;flex-direction:column;min-height:0;">
+            <span class="mfc-grp-lbl">동작 로그</span>
+            <div class="mfc-log" id="log-box" style="margin-top:6px;flex:1;">
+              <span style="color:#aaa;">[시스템] 프로그램 초기화 완료. 통신 연결 대기 중...</span>
+            </div>
+            <div class="mfc-log-btns">
+              <button class="mfc-btn" onclick="logMsg('작동 이력을 불러옵니다...')">📋 작동 이력 확인</button>
+              <button class="mfc-btn blue" onclick="logMsg('EXCEL 파일로 저장 중...')">💾 EXCEL 저장</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ████████████████████████████████████████████
+     PAGE: DETAIL — 로봇
+████████████████████████████████████████████ -->
+<div id="page-detail-robot" class="page detail-page">
+  <div class="detail-left">
+    <div style="margin-bottom:8px;">
+      <div class="d-label">프로젝트</div>
+      <div class="d-proj-name">자율주행차 모터 및 센서 연동</div>
+    </div>
+    <div style="height:3px;background:#1565C0;width:100%;border-radius:2px;"></div>
+    <div class="d-period-block">
+      <div class="d-label">기간</div>
+      <div class="d-period">6개월<br>2023.10 ~ 2024.04</div>
+    </div>
+  </div>
+  <div class="v-div"></div>
+  <div class="detail-right">
+    <div class="d-back-btn" onclick="showPage('page-main')">← 메인으로 돌아가기</div>
+    <div class="d-nav-row" style="flex:1;" onclick="showPage('page-diag-robot')">
+      <div class="d-nav-title">📐 구성도</div>
+      <div class="d-nav-desc">로봇팔 및 라이다 센서 시스템 구성을 확인합니다.</div>
+      <span class="badge">임베디드PC</span>
+      <span class="badge">자율주행</span>
+    </div>
+    <div class="d-nav-row" style="flex:1;" onclick="showPage('page-prog-robot')">
+      <div class="d-nav-title">💻 프로그램</div>
+      <div class="d-nav-desc">연동 프로그램 화면을 확인합니다.</div>
+      <span class="badge">와이파이</span>
+      <span class="badge">데이터 파싱</span>
+      <span class="badge">지도 시각화</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ████████████████████████████████████████████
+     PAGE: DIAGRAM — 로봇
+████████████████████████████████████████████ -->
+<div id="page-diag-robot" class="page subpage">
+  <div class="sp-header">
+    <button class="sp-back" onclick="showPage('page-detail-robot')">← 돌아가기</button>
+    <span class="sp-title">자율주행차 모터 및 센서 연동 — 구성도</span>
+  </div>
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab(this,'tab-robot-arm')">로봇 팔 구성도</div>
+    <div class="tab" onclick="switchTab(this,'tab-robot-lidar')">라이다 구성도</div>
+  </div>
+  <div id="tab-robot-arm" class="tab-pane active">
+    <div class="diag-wrap">
+      <div class="diag-spec">스펙 요약 : <b>라즈베리 보드</b>, <b>임베디드 PC</b>, <b>마이크로 서보</b>, <b>자율주행차 테스트 키트</b></div>
+      <div class="diag-title">구성도</div>
+      <div class="diag-row">
+        <div style="display:flex;flex-direction:column;gap:10px;margin-right:0;">
+          <div class="diag-node" style="background:#EBF5FF;min-width:130px;">보드<br>라즈베리5</div>
+          <div style="display:flex;align-items:center;gap:0;padding-left:130px;">
+            <div class="diag-node" style="min-width:130px;background:#f5f5f5;">와이파이</div>
+          </div>
+          <div class="diag-node" style="min-width:130px;background:#f5f5f5;">PC 프로그램<br>키보드 입력</div>
+        </div>
+        <span class="arr">→</span>
+        <div class="diag-node">서보 모터</div>
+        <span class="arr">→</span>
+        <div class="diag-node">로봇 팔 (2축)<br>프로그램 연동</div>
+        <span class="arr">→</span>
+        <div class="diag-node">와이파이</div>
+        <span class="arr">→</span>
+        <div class="diag-node">자율주행차<br>PC 연동</div>
+      </div>
+      <div class="diag-photos">
+        <div class="diag-photo">
+          <img src="images/robot_servo.png" alt="서보" style="mix-blend-mode:multiply;">
+          <span>마이크로 서보 (MG90S)</span>
+        </div>
+        <div class="diag-photo">
+          <img src="images/robot_arm.png" alt="로봇팔" style="mix-blend-mode:multiply;">
+          <span>아두이노 로봇팔 (2축)</span>
+        </div>
+        <div class="diag-photo">
+          <img src="images/robot_car.png" alt="자율주행차" style="mix-blend-mode:multiply;">
+          <span>자율주행 테스트 키트</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="tab-robot-lidar" class="tab-pane">
+    <div class="diag-wrap">
+      <div class="diag-spec">스펙 요약 : <b>2D 라이다 센서</b>, <b>임베디드 PC (Jetson)</b>, <b>데이터 파싱 프로그램</b></div>
+      <div class="diag-title">구성도</div>
+      <div class="diag-row">
+        <div class="diag-node" style="background:#EBF5FF;min-width:120px;">2D 라이다<br>측정</div>
+        <span class="arr">→</span>
+        <div class="diag-node" style="min-width:100px;">시리얼</div>
+        <span class="arr">→</span>
+        <div class="diag-node" style="min-width:120px;">임베디드 PC</div>
+        <span class="arr">→</span>
+        <div class="diag-node" style="min-width:130px;">데이터 파싱<br>프로그램</div>
+        <span class="arr">→</span>
+        <div class="diag-node" style="min-width:120px;">자율주행차<br>연동</div>
+      </div>
+      <div class="diag-photos">
+        <div class="diag-photo">
+          <img src="images/lidar.png" alt="2D 라이다" style="mix-blend-mode:multiply;">
+          <span>2D LiDAR 센서</span>
+        </div>
+        <div class="diag-photo">
+          <img src="images/embedded_pc.png" alt="임베디드PC" style="mix-blend-mode:multiply;">
+          <span>임베디드 PC (Jetson)</span>
+        </div>
+        <div class="diag-photo">
+          <img src="images/map3.png" alt="2D 지도" style="mix-blend-mode:multiply;">
+          <span>2D 지도 변환 결과</span>
+        </div>
+        <div class="diag-photo">
+          <img src="images/car_lidar.png" alt="차-라이다" style="mix-blend-mode:multiply;">
+          <span>자율주행차 + 라이다 위치</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ████████████████████████████████████████████
+     PAGE: PROGRAM — 로봇 (빈 페이지)
+████████████████████████████████████████████ -->
+<div id="page-prog-robot" class="page" style="flex-direction:column;">
+  <div class="sp-header">
+    <button class="sp-back" onclick="showPage('page-detail-robot')">← 돌아가기</button>
+    <span class="sp-title">자율주행차 모터 및 센서 연동 — 프로그램</span>
+  </div>
+  <div style="flex:1;display:flex;align-items:center;justify-content:center;background:#fafcff;">
+    <div style="text-align:center;color:#aaa;">
+      <div style="font-size:60px;margin-bottom:16px;">🛠️</div>
+      <div style="font-size:22px;font-weight:700;color:#1565C0;">준비 중입니다</div>
+      <div style="font-size:16px;margin-top:8px;">프로그램 화면이 곧 추가됩니다.</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ████████████████████████████████████████████
+     JAVASCRIPT
+████████████████████████████████████████████ -->
+<script>
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function switchTab(el, paneId) {
+  const root = el.closest('.page, .subpage');
+  root.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  root.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById(paneId).classList.add('active');
+}
+
+function logMsg(msg) {
+  const box = document.getElementById('log-box');
+  const ts = new Date().toTimeString().slice(0,8);
+  box.innerHTML += `<br><span style="color:#aaa;">[${ts}]</span> ${msg}`;
+  box.scrollTop = box.scrollHeight;
+}
+
+let cycleInterval = null;
+let cycleCount = 0;
+let running = false;
+
+function startCycle() {
+  if (running) return;
+  running = true;
+  cycleCount = 0;
+  const target = parseInt(document.getElementById('rep-input').value) || 10;
+  logMsg('<span style="color:#00ff41;">▶ 자동 사이클 시작 — 목표 반복횟수: ' + target + '</span>');
+  document.getElementById('ax1-stat').textContent = 'RUN';
+  document.getElementById('ax1-stat').style.color = '#ff9900';
+  document.getElementById('ax2-stat').textContent = 'RUN';
+  document.getElementById('ax2-stat').style.color = '#ff9900';
+  cycleInterval = setInterval(() => {
+    cycleCount++;
+    const pos = cycleCount * 500;
+    document.getElementById('ax1-pos').textContent = '+' + String(pos).padStart(5,'0');
+    document.getElementById('ax2-pos').textContent = '+' + String(pos + Math.floor(Math.random()*3)).padStart(5,'0');
+    document.getElementById('rep-cur').textContent = String(cycleCount).padStart(4,'0');
+    logMsg('반복 ' + cycleCount + '/' + target + ' — Z Up → InPos Check → Z Down 완료');
+    if (cycleCount >= target) {
+      clearInterval(cycleInterval);
+      running = false;
+      document.getElementById('ax1-stat').textContent = 'DONE';
+      document.getElementById('ax1-stat').style.color = '#00ff41';
+      document.getElementById('ax2-stat').textContent = 'DONE';
+      document.getElementById('ax2-stat').style.color = '#00ff41';
+      logMsg('<span style="color:#00ff41;">■ 사이클 완료 (Complete)</span>');
+    }
+  }, 800);
+}
+
+function stopCycle() {
+  if (cycleInterval) clearInterval(cycleInterval);
+  running = false;
+  document.getElementById('ax1-stat').textContent = 'STOP';
+  document.getElementById('ax1-stat').style.color = '#ff4444';
+  document.getElementById('ax2-stat').textContent = 'STOP';
+  document.getElementById('ax2-stat').style.color = '#ff4444';
+  logMsg('<span style="color:#ff4444;">■ 정지 명령 수신 — 동작 중단</span>');
+}
+
+function homeMove() {
+  logMsg('원점 복귀 중...');
+  setTimeout(() => {
+    document.getElementById('ax1-pos').textContent = '+00000';
+    document.getElementById('ax2-pos').textContent = '+00000';
+    document.getElementById('ax1-stat').textContent = 'IDLE';
+    document.getElementById('ax1-stat').style.color = '#ffcc00';
+    document.getElementById('ax2-stat').textContent = 'IDLE';
+    document.getElementById('ax2-stat').style.color = '#ffcc00';
+    document.getElementById('rep-cur').textContent = '0000';
+    logMsg('<span style="color:#00ff41;">원점 복귀 완료</span>');
+  }, 1200);
+}
+</script>
+</body>
+</html>
