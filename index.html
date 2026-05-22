@@ -80,15 +80,15 @@ body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:#111;font-size:
 .d-info-row{display:flex;align-items:flex-start;gap:14px;}
 .d-info-icon{font-size:26px;color:#0057b8;flex-shrink:0;margin-top:2px;}
 .d-info-content{display:flex;flex-direction:column;gap:3px;}
-.d-info-label{font-size:15px;font-weight:700;color:#0057b8;}
-.d-info-text{font-size:14px;color:#333;line-height:1.75;}
+.d-info-label{font-size:23px;font-weight:700;color:#0057b8;}
+.d-info-text{font-size:21px;color:#333;line-height:1.75;}
 /* ── System Diagram ── */
 .sysdiag-outer{padding:4px 0 16px 0;}
 .sysdiag-box{border:2px solid #b3d0f0;border-radius:14px;background:#fff;padding:20px 22px;display:flex;flex-direction:column;gap:16px;}
 .sysdiag-header{display:flex;align-items:center;gap:12px;border-bottom:1.5px solid #dce8f8;padding-bottom:14px;}
-.sysdiag-num{width:30px;height:30px;background:#0057b8;color:#fff;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;flex-shrink:0;}
-.sysdiag-ttl{font-size:17px;font-weight:800;color:#0057b8;}
-.sysdiag-desc{font-size:12px;color:#777;margin-top:2px;}
+.sysdiag-num{width:30px;height:30px;background:#0057b8;color:#fff;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:900;flex-shrink:0;}
+.sysdiag-ttl{font-size:23px;font-weight:800;color:#0057b8;}
+.sysdiag-desc{font-size:17px;color:#777;margin-top:2px;}
 .sysdiag-flow{display:flex;align-items:center;flex-wrap:wrap;justify-content:center;gap:0;padding:6px 0;}
 .sysdiag-node{display:flex;flex-direction:column;align-items:center;gap:7px;opacity:0;transform:translateY(10px);transition:opacity 0.45s ease,transform 0.45s ease;}
 .sysdiag-node.sd-vis{opacity:1;transform:translateY(0);}
@@ -126,12 +126,464 @@ body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:#111;font-size:
 .hdiag-vnode{padding:9px 18px;border-radius:8px;font-size:13px;font-weight:600;color:#111;border:1.5px solid #90bce8;background:#f0f6ff;min-width:260px;text-align:left;}
 .hdiag-vnode.c-yellow{background:#fff9d6;border-color:#d4b96a;}
 .hdiag-varrow{color:#0057b8;font-size:18px;padding-left:20px;line-height:1.2;}
+
+/* ── Software detail (MEL program) ── */
+.mel-soft-wrap{
+  margin-top:20px;
+  padding-top:18px;
+  border-top:1.5px solid #d0e4f7;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+.mel-soft-image{
+  width:100%;
+  max-width:980px;
+  object-fit:contain;
+  border:2px solid #cfdff2;
+  border-radius:8px;
+  background:#fff;
+}
+.mel-soft-detail{
+  font-size:21px;
+  line-height:1.7;
+  color:#111;
+}
+.mel-soft-caption{font-size:21px;font-weight:700;color:#0057b8;}
+.mel-soft-feature-title{font-size:21px;font-weight:800;color:#b80000;margin-top:6px;}
+.mel-soft-table{
+  width:100%;
+  border-collapse:collapse;
+  border:1px solid #ddd;
+  font-size:21px;
+  background:#fff;
+}
+.mel-soft-table th,.mel-soft-table td{
+  border:1px solid #ddd;
+  padding:8px;
+  text-align:center;
+}
+.mel-soft-table th{background:#f5f5f5;font-weight:800;}
+.mel-soft-help{
+  margin-top:10px;
+  padding:12px 14px;
+  border:1px solid #ead1d1;
+  border-radius:6px;
+  background:#fff7f7;
+  font-size:21px;
+}
+.mel-soft-form{
+  border:1px solid #ddd;
+  border-radius:6px;
+  overflow:hidden;
+  background:#fff;
+}
+.mel-soft-form-sec{
+  padding:14px;
+  border-bottom:1px solid #ddd;
+}
+.mel-soft-form-sec:last-child{border-bottom:none;}
+.mel-soft-form-title{font-size:21px;font-weight:800;margin-bottom:8px;}
+.mel-soft-row{display:flex;gap:10px;flex-wrap:wrap;}
+.mel-soft-pill{
+  padding:6px 10px;
+  border:1px solid #ccc;
+  border-radius:4px;
+  background:#fafafa;
+  font-size:21px;
+}
+
+.mel-analysis-card{
+  width:100%;
+  max-width:1200px;
+  background:#fff;
+  border:2px solid #d5dce5;
+  border-radius:6px;
+  overflow:hidden;
+  box-shadow:0 6px 18px rgba(0,0,0,0.08);
+}
+.mel-analysis-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:16px;
+  padding:18px 22px;
+  border-bottom:1px solid #ddd;
+}
+.mel-analysis-title{margin:0;font-size:21px;font-weight:800;color:#b80000;}
+.mel-analysis-sub{margin:8px 0 0;font-size:21px;line-height:1.6;color:#555;}
+.mel-excel-btn{
+  border:none;
+  border-radius:4px;
+  padding:11px 18px;
+  background:linear-gradient(#d71920, #b80000);
+  color:#fff;
+  font-size:21px;
+  font-weight:800;
+  cursor:pointer;
+}
+.mel-analysis-body{padding:22px;}
+.mel-analysis-table-wrap{overflow-x:auto;border:1px solid #d8d8d8;}
+.mel-analysis-table{
+  width:100%;
+  min-width:980px;
+  border-collapse:collapse;
+  background:#fff;
+  font-size:21px;
+}
+.mel-analysis-table th,.mel-analysis-table td{
+  border:1px solid #d8d8d8;
+  padding:12px;
+  text-align:center;
+  white-space:nowrap;
+}
+.mel-analysis-table thead{background:#f3f3f3;}
+.mel-analysis-table th{font-weight:800;color:#b80000;}
+.mel-analysis-table tbody tr:nth-child(even){background:#fafafa;}
+.mel-result-good{color:#008a2e;font-weight:800;}
+.mel-summary-box{
+  margin-top:18px;
+  padding:16px;
+  border:1px solid #e3c2c2;
+  background:#fff7f7;
+  border-radius:4px;
+  line-height:1.7;
+  font-size:21px;
+}
+.mel-summary-title{margin-bottom:8px;color:#b80000;font-weight:800;}
+
+/* ── Auto Control (Feature 2) ── */
+.auto-control-card{
+  width:100%;
+  max-width:1200px;
+  background:#fff;
+  border:2px solid #d5dce5;
+  border-radius:6px;
+  overflow:hidden;
+  box-shadow:0 6px 18px rgba(0,0,0,0.08);
+}
+.auto-control-header{
+  padding:20px 24px;
+  border-bottom:1px solid #ddd;
+}
+.auto-control-title{
+  margin:0;
+  color:#b80000;
+  font-size:24px;
+  font-weight:800;
+}
+.auto-control-desc{
+  margin:8px 0 0;
+  color:#555;
+  font-size:15px;
+  line-height:1.7;
+}
+.auto-control-body{
+  padding:22px;
+  display:grid;
+  grid-template-columns:1.1fr 0.9fr;
+  gap:20px;
+}
+.section-box{
+  border:1px solid #ddd;
+  border-radius:6px;
+  background:#fff;
+  overflow:hidden;
+}
+.section-title{
+  padding:12px 16px;
+  background:#f5f5f5;
+  color:#b80000;
+  font-size:17px;
+  font-weight:800;
+  border-bottom:1px solid #ddd;
+}
+.section-content{padding:16px;}
+.recipe-grid{
+  display:grid;
+  grid-template-columns:160px 1fr;
+  gap:10px 12px;
+  align-items:center;
+}
+.field-label{
+  font-size:14px;
+  font-weight:800;
+  color:#333;
+}
+.field-input{
+  width:100%;
+  height:38px;
+  padding:0 10px;
+  border:1px solid #ccc;
+  border-radius:4px;
+  font-size:14px;
+}
+.axis-table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:14px;
+}
+.axis-table th,.axis-table td{
+  border:1px solid #d8d8d8;
+  padding:10px;
+  text-align:center;
+}
+.axis-table th{
+  background:#f3f3f3;
+  color:#b80000;
+  font-weight:800;
+}
+.status-panel{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.status-item{
+  padding:14px;
+  background:#fff7f7;
+  border:1px solid #e3c2c2;
+  border-radius:4px;
+}
+.status-label{
+  color:#666;
+  font-size:13px;
+  font-weight:700;
+  margin-bottom:6px;
+}
+.status-value{
+  color:#111;
+  font-size:20px;
+  font-weight:800;
+}
+.status-good{color:#008a2e;}
+.button-row{
+  display:flex;
+  gap:10px;
+  margin-top:16px;
+}
+.control-button{
+  flex:1;
+  height:42px;
+  border:none;
+  border-radius:4px;
+  color:#fff;
+  font-size:15px;
+  font-weight:800;
+  cursor:pointer;
+}
+.start-button{background:linear-gradient(#d71920, #b80000);}
+.stop-button{background:#555;}
+.progress-wrap{
+  margin-top:16px;
+  height:18px;
+  background:#eee;
+  border-radius:999px;
+  overflow:hidden;
+  border:1px solid #ccc;
+}
+.progress-bar{
+  width:0%;
+  height:100%;
+  background:linear-gradient(#d71920, #b80000);
+  transition:width 0.3s ease;
+}
+.note-box{
+  margin-top:18px;
+  padding:14px;
+  border:1px solid #e3c2c2;
+  background:#fff7f7;
+  border-radius:4px;
+  font-size:14px;
+  line-height:1.7;
+}
+.note-title{
+  color:#b80000;
+  font-weight:800;
+  margin-bottom:6px;
+}
+
+/* ── Manual Control (Feature 1) ── */
+.jog-card{
+  width:100%;
+  max-width:900px;
+  margin:0 auto;
+  background:#fff;
+  border:2px solid #d5dce5;
+  border-radius:6px;
+  overflow:hidden;
+  box-shadow:0 6px 18px rgba(0,0,0,0.08);
+}
+.jog-header{
+  padding:20px 24px;
+  border-bottom:1px solid #ddd;
+}
+.jog-title{
+  margin:0;
+  color:#b80000;
+  font-size:24px;
+  font-weight:800;
+}
+.jog-desc{
+  margin:8px 0 0;
+  color:#555;
+  font-size:15px;
+  line-height:1.7;
+}
+.jog-body{
+  padding:22px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+}
+.jog-section-box{
+  border:1px solid #ddd;
+  border-radius:6px;
+  overflow:hidden;
+  background:#fff;
+}
+.jog-section-title{
+  padding:12px 16px;
+  background:#f5f5f5;
+  color:#b80000;
+  font-size:17px;
+  font-weight:800;
+  border-bottom:1px solid #ddd;
+}
+.jog-section-content{padding:16px;}
+.jog-form-row{margin-bottom:14px;}
+.jog-form-label{
+  display:block;
+  margin-bottom:7px;
+  font-size:14px;
+  font-weight:800;
+  color:#333;
+}
+.jog-input,.jog-select{
+  width:100%;
+  height:38px;
+  padding:0 10px;
+  border:1px solid #ccc;
+  border-radius:4px;
+  font-size:14px;
+}
+.jog-button-row{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.jog-button{
+  flex:1;
+  min-width:120px;
+  height:42px;
+  border:none;
+  border-radius:4px;
+  font-size:15px;
+  font-weight:800;
+  cursor:pointer;
+  color:#fff;
+}
+.direction-button{background:#666;}
+.direction-button.active{background:linear-gradient(#d71920, #b80000);}
+.start-button{background:linear-gradient(#d71920, #b80000);}
+.stop-button{background:#555;}
+.jog-status-panel{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.jog-status-item{
+  padding:14px;
+  background:#fff7f7;
+  border:1px solid #e3c2c2;
+  border-radius:4px;
+}
+.jog-status-label{
+  color:#666;
+  font-size:13px;
+  font-weight:700;
+  margin-bottom:6px;
+}
+.jog-status-value{
+  color:#111;
+  font-size:20px;
+  font-weight:800;
+  font-family:monospace;
+}
+.status-run{color:#008a2e;}
+.jog-position-area{grid-column:1 / -1;}
+.jog-position-number{
+  margin-bottom:10px;
+  font-size:24px;
+  font-weight:800;
+  color:#b80000;
+  font-family:monospace;
+  text-align:center;
+}
+.jog-position-progress-wrap{
+  height:22px;
+  background:#eee;
+  border:1px solid #ccc;
+  border-radius:999px;
+  overflow:hidden;
+}
+.jog-position-progress-bar{
+  width:50%;
+  height:100%;
+  background:linear-gradient(#d71920, #b80000);
+  transition:width 0.08s linear;
+}
+.jog-range-labels{
+  display:flex;
+  justify-content:space-between;
+  margin-top:8px;
+  color:#666;
+  font-size:13px;
+  font-weight:700;
+}
+.jog-control-area{
+  margin-top:18px;
+  padding-top:16px;
+  border-top:1px solid #ddd;
+}
+.jog-control-guide{
+  margin-bottom:10px;
+  color:#666;
+  font-size:13px;
+  line-height:1.6;
+  font-weight:700;
+}
+.jog-note-box{
+  grid-column:1 / -1;
+  padding:14px;
+  border:1px solid #e3c2c2;
+  background:#fff7f7;
+  border-radius:4px;
+  font-size:14px;
+  line-height:1.7;
+}
+.jog-note-title{
+  margin-bottom:6px;
+  color:#b80000;
+  font-weight:800;
+}
 @media(max-width:768px){
   .sysdiag-flow{flex-direction:column;}
   .sysdiag-arr{transform:rotate(90deg);}
   .sysdiag-arr.sd-vis{transform:rotate(90deg);}
   .sysdiag-arr-icon{animation:none;}
   #sysdiag-flow-det{display:none !important;}
+  .mel-soft-detail,.mel-soft-caption,.mel-soft-feature-title,.mel-soft-table,.mel-soft-help,.mel-soft-form-title,.mel-soft-pill,.mel-analysis-title,.mel-analysis-sub,.mel-excel-btn,.mel-analysis-table,.mel-summary-box{font-size:14px !important;}
+  .mel-analysis-header{flex-direction:column;align-items:flex-start;}
+  .mel-analysis-body{padding:16px;}
+  .mel-excel-btn{width:100%;}
+  .auto-control-body{grid-template-columns:1fr;padding:16px;}
+  .recipe-grid{grid-template-columns:1fr;}
+  .status-panel{grid-template-columns:1fr;}
+  .auto-control-title{font-size:20px;}
+  .jog-body{grid-template-columns:1fr;padding:16px;}
+  .jog-position-area,.jog-note-box{grid-column:auto;}
+  .jog-status-panel{grid-template-columns:1fr;}
+  .jog-title{font-size:20px;}
 }
 .detail-right{
   flex:1;padding:32px 28px;display:flex;flex-direction:column;gap:16px;overflow-y:auto;
@@ -150,8 +602,8 @@ body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:#111;font-size:
   transition:background .15s;flex:1;min-height:120px;
 }
 .d-nav-row:hover{background:#EBF5FF;}
-.d-nav-title{font-size:19px;font-weight:900;color:#1565C0;margin-bottom:8px;}
-.d-nav-desc{font-size:14px;color:#444;margin-bottom:10px;}
+.d-nav-title{font-size:23px;font-weight:900;color:#1565C0;margin-bottom:8px;}
+.d-nav-desc{font-size:17px;color:#444;margin-bottom:10px;}
 .d-rows-flex{flex:1;display:flex;flex-direction:column;gap:16px;}
 
 /* ══════════════════════════════════════════════
@@ -231,10 +683,8 @@ body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:#111;font-size:
 .pop-title{font-size:18px;font-weight:900;color:#1565C0;margin-bottom:22px;}
 /* ── Flow popup desktop enlargement ── */
 @media(min-width:769px){
-  #pop-flow .pop-box{min-width:88vw;min-height:55vh;overflow:auto;}
-  #pop-flow .pop-title{font-size:26px !important;margin-bottom:28px !important;}
-  #pop-flow svg{width:2880px;height:auto;display:block;}
-  .flow-vlist{display:none;}
+  #pop-flow .pop-box{max-width:700px;width:100%;max-height:90vh;overflow-y:auto;}
+  #pop-flow .pop-title{font-size:24px !important;margin-bottom:20px !important;}
 }
 /* ── Flow vertical list (mobile) ── */
 .flow-vlist{display:none;flex-direction:column;align-items:flex-start;gap:0;font-family:'Noto Sans KR',sans-serif;}
@@ -321,7 +771,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:#111;font-size:
   border-color:#1565C0 !important;
   color:#1565C0 !important;
   justify-content:center;
-  font-size:17px !important;
+  font-size:23px !important;
 }
 .d-back-btn-z:hover{ background:#EBF5FF !important; }
 
@@ -330,8 +780,8 @@ body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:#111;font-size:
   width: 40% !important;
   flex: 0 0 40% !important;
 }
-#page-detail-z .d-label     { font-size: calc(12px + 7pt); letter-spacing: 1.5px; }
-#page-detail-z .d-proj-name { font-size: calc(22px + 7pt); line-height: 1.35; }
+#page-detail-z .d-label     { font-size: 23px; letter-spacing: 1.5px; }
+#page-detail-z .d-proj-name { font-size: 33px; line-height: 1.35; }
 #page-detail-z .d-period    { font-size: calc(15px + 7pt); line-height: 1.8; }
 
 /* ── Profile layout helpers ── */
@@ -756,6 +1206,260 @@ body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:#111;font-size:
           <div class="hdiag-vnode">자체 개발 컨트롤러</div>
           <div class="hdiag-varrow">↓</div>
           <div class="hdiag-vnode c-yellow">PC 프로그램 연동</div>
+        </div>
+
+        <div class="mel-soft-wrap">
+          <img class="mel-soft-image" src="images/mel-program.png" alt="미쓰비시 제어프로그램 연동 화면">
+          <div class="mel-soft-caption">미쓰비시 제어프로그램 연동</div>
+
+          <div class="mel-soft-detail">모션 제어 (수동)</div>
+          <div class="mel-soft-detail">JOG , ABS (절대위치 이동) 기능 연동</div>
+
+          <div class="mel-soft-feature-title">기능 1 : 수동 제어. 외부 프로그램 기능을 자체 프로그램에 가져다 쓰는 방식</div>
+          <section class="jog-card">
+            <header class="jog-header">
+              <h1 class="jog-title">기능 1. 수동 제어 - JOG 운전</h1>
+              <p class="jog-desc">
+                외부 프로그램의 JOG 운전 기능을 자체 프로그램 UI에서 사용할 수 있도록 구성한 예시입니다.
+                속도, 운전 방향, 시작/정지 상태, 현재 위치를 실시간으로 확인할 수 있습니다.
+              </p>
+            </header>
+
+            <main class="jog-body">
+              <section class="jog-section-box">
+                <div class="jog-section-title">수동 운전 설정</div>
+                <div class="jog-section-content">
+                  <div class="jog-form-row">
+                    <label class="jog-form-label" for="jogAxisSelect">운전 축 선택</label>
+                    <select class="jog-select" id="jogAxisSelect">
+                      <option value="Z1">축 #1</option>
+                      <option value="Z2">축 #2</option>
+                    </select>
+                  </div>
+
+                  <div class="jog-form-row">
+                    <label class="jog-form-label" for="jogSpeedInput">속도 설정</label>
+                    <input class="jog-input" id="jogSpeedInput" type="number" value="100" min="0" max="1000">
+                  </div>
+
+                  <div class="jog-form-row">
+                    <span class="jog-form-label">운전 방향</span>
+                    <div class="jog-button-row">
+                      <button class="jog-button direction-button active" id="jogForwardButton" onclick="setJogDirection('forward')">정방향</button>
+                      <button class="jog-button direction-button" id="jogReverseButton" onclick="setJogDirection('reverse')">역방향</button>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <section class="jog-section-box">
+                <div class="jog-section-title">JOG 운전 상태</div>
+                <div class="jog-section-content">
+                  <div class="jog-status-panel">
+                    <div class="jog-status-item">
+                      <div class="jog-status-label">운전 상태</div>
+                      <div class="jog-status-value status-run" id="jogStatus">READY</div>
+                    </div>
+                    <div class="jog-status-item">
+                      <div class="jog-status-label">현재 속도</div>
+                      <div class="jog-status-value" id="jogCurrentSpeed">0 r/min</div>
+                    </div>
+                    <div class="jog-status-item">
+                      <div class="jog-status-label">선택 축</div>
+                      <div class="jog-status-value" id="jogCurrentAxis">Z1</div>
+                    </div>
+                    <div class="jog-status-item">
+                      <div class="jog-status-label">운전 방향</div>
+                      <div class="jog-status-value" id="jogCurrentDirection">정방향</div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <section class="jog-section-box jog-position-area">
+                <div class="jog-section-title">현재 위치</div>
+                <div class="jog-section-content">
+                  <div class="jog-position-number" id="jogCurrentPosition">+00000 pulse</div>
+                  <div class="jog-position-progress-wrap">
+                    <div class="jog-position-progress-bar" id="jogPositionProgressBar"></div>
+                  </div>
+                  <div class="jog-range-labels">
+                    <span>-5000 pulse</span>
+                    <span>0 pulse</span>
+                    <span>+5000 pulse</span>
+                  </div>
+
+                  <div class="jog-control-area">
+                    <div class="jog-control-guide">
+                      JOG는 누르는 동안만 이동하도록 구성하는 것이 안전하지만,
+                      구현 편의상 버튼을 두 개 두었습니다.
+                    </div>
+                    <div class="jog-button-row">
+                      <button class="jog-button start-button" onclick="startFeature1Jog()">JOG 운전 시작</button>
+                      <button class="jog-button stop-button" onclick="stopFeature1Jog()">JOG 운전 정지</button>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <div class="jog-note-box">
+                <div class="jog-note-title">참고</div>
+                JOG 운전 시작 시 선택한 방향으로 위치값이 계속 증가 또는 감소합니다.
+                정지 버튼을 누르면 현재 위치에서 멈추고,
+                현재 속도는 0 r/min으로 변경됩니다.
+              </div>
+            </main>
+          </section>
+
+          <div class="mel-soft-feature-title">기능 2 : 자동 제어. 1번 축과 2번 축을 동시에 제어</div>
+          <div class="mel-soft-detail">레시피 설정하여 10,000회 이상 자동 반복 설정 가능</div>
+          <section class="auto-control-card">
+            <header class="auto-control-header">
+              <h1 class="auto-control-title">기능 2. 자동 제어</h1>
+              <p class="auto-control-desc">
+                1번 축과 2번 축을 동시에 제어하며, 레시피 기반으로 상승/하강 위치와 속도 조건을 설정합니다.
+                반복 횟수는 10,000회 이상 자동 반복 설정이 가능합니다.
+              </p>
+            </header>
+
+            <main class="auto-control-body">
+              <div class="section-box">
+                <div class="section-title">레시피 설정</div>
+                <div class="section-content">
+                  <div class="recipe-grid">
+                    <label class="field-label">반복 횟수</label>
+                    <input class="field-input" id="repeatCountInput" type="number" value="10000">
+
+                    <label class="field-label">상승 위치</label>
+                    <input class="field-input" type="text" value="+5000 pulse">
+
+                    <label class="field-label">하강 위치</label>
+                    <input class="field-input" type="text" value="0 pulse">
+
+                    <label class="field-label">운전 속도</label>
+                    <input class="field-input" type="text" value="300 r/min">
+
+                    <label class="field-label">왕복 딜레이</label>
+                    <input class="field-input" type="text" value="120 ms">
+                  </div>
+
+                  <div class="note-box">
+                    <div class="note-title">제어 방식</div>
+                    설정된 레시피에 따라 Z1/Z2 두 축을 동시에 상승 이동 후, 엔코더 위치 확인이 완료되면 하강 이동을 수행합니다.
+                  </div>
+                </div>
+              </div>
+
+              <div class="section-box">
+                <div class="section-title">자동 반복 상태</div>
+                <div class="section-content">
+                  <div class="status-panel">
+                    <div class="status-item">
+                      <div class="status-label">제어 상태</div>
+                      <div class="status-value status-good" id="controlStatus">READY</div>
+                    </div>
+
+                    <div class="status-item">
+                      <div class="status-label">현재 반복 횟수</div>
+                      <div class="status-value" id="currentRepeatCount">0</div>
+                    </div>
+
+                    <div class="status-item">
+                      <div class="status-label">Z1 위치</div>
+                      <div class="status-value" id="z1Position">+00000</div>
+                    </div>
+
+                    <div class="status-item">
+                      <div class="status-label">Z2 위치</div>
+                      <div class="status-value" id="z2Position">+00000</div>
+                    </div>
+                  </div>
+
+                  <div class="progress-wrap">
+                    <div class="progress-bar" id="progressBar"></div>
+                  </div>
+
+                  <div class="button-row">
+                    <button class="control-button start-button" onclick="startAutoControl()">자동 반복 시작</button>
+                    <button class="control-button stop-button" onclick="stopAutoControl()">정지</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="section-box" style="grid-column: 1 / -1;">
+                <div class="section-title">축 동시 제어 조건</div>
+                <div class="section-content">
+                  <table class="axis-table">
+                    <thead>
+                      <tr>
+                        <th>축</th>
+                        <th>제어 대상</th>
+                        <th>이동 방식</th>
+                        <th>위치 확인</th>
+                        <th>동기화 조건</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>1번 축</td>
+                        <td>웨이퍼 스테이지 Z1</td>
+                        <td>상대 위치 이동</td>
+                        <td>엔코더 피드백</td>
+                        <td>InPosition 확인</td>
+                      </tr>
+                      <tr>
+                        <td>2번 축</td>
+                        <td>웨이퍼 스테이지 Z2</td>
+                        <td>상대 위치 이동</td>
+                        <td>엔코더 피드백</td>
+                        <td>InPosition 확인</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </main>
+          </section>
+
+          <div class="mel-soft-feature-title">기능 3 : 반복 동작 후 데이터 분석 평가표를 EXCEL로 제공</div>
+          <div class="mel-analysis-card">
+            <div class="mel-analysis-header">
+              <div>
+                <h3 class="mel-analysis-title">기능 3. 반복 동작 데이터 분석 평가표</h3>
+                <p class="mel-analysis-sub">반복 동작 이후 속도, 위치 편차, 딜레이 데이터를 분석하여 Excel 형식으로 제공합니다.</p>
+              </div>
+              <button class="mel-excel-btn" onclick="downloadExcelFile()">Excel 다운로드 가능</button>
+            </div>
+            <div class="mel-analysis-body">
+              <div class="mel-analysis-table-wrap">
+                <table id="analysisTable" class="mel-analysis-table">
+                  <thead>
+                    <tr>
+                      <th>반복 회차</th>
+                      <th>시간</th>
+                      <th>최저 속도</th>
+                      <th>최대 속도</th>
+                      <th>가속 시간</th>
+                      <th>위치 편차</th>
+                      <th>왕복 딜레이</th>
+                      <th>평가</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>1회</td><td>10:15:23</td><td>95 r/min</td><td>302 r/min</td><td>0.42 sec</td><td>3 pulse</td><td>120 ms</td><td class="mel-result-good">정상</td></tr>
+                    <tr><td>2회</td><td>10:15:31</td><td>96 r/min</td><td>301 r/min</td><td>0.41 sec</td><td>2 pulse</td><td>118 ms</td><td class="mel-result-good">정상</td></tr>
+                    <tr><td>3회</td><td>10:15:39</td><td>94 r/min</td><td>303 r/min</td><td>0.43 sec</td><td>4 pulse</td><td>121 ms</td><td class="mel-result-good">정상</td></tr>
+                    <tr><td>4회</td><td>10:15:47</td><td>95 r/min</td><td>300 r/min</td><td>0.42 sec</td><td>3 pulse</td><td>119 ms</td><td class="mel-result-good">정상</td></tr>
+                    <tr><td>5회</td><td>10:15:55</td><td>96 r/min</td><td>302 r/min</td><td>0.41 sec</td><td>2 pulse</td><td>120 ms</td><td class="mel-result-good">정상</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="mel-summary-box">
+                <div class="mel-summary-title">분석 결과</div>
+                5회 반복 동작 모두 정상 범위 내에서 수행되었으며, 속도 변화, 가속 시간, 위치 편차, 왕복 딜레이 값이 안정적으로 유지되었습니다.
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1394,6 +2098,178 @@ function homeMove() {
   setBadge('IDLE', '#555');
   logMsg('원점 복귀 완료 — Z1: +00000 / Z2: +00000');
 }
+
+function downloadExcelFile() {
+  const analysisTable = document.getElementById('analysisTable');
+  if (!analysisTable) return;
+  const excelHtml = `
+    <html>
+      <head><meta charset="UTF-8"></head>
+      <body>${analysisTable.outerHTML}</body>
+    </html>
+  `;
+  const excelBlob = new Blob([excelHtml], { type: 'application/vnd.ms-excel' });
+  const downloadLink = document.createElement('a');
+  downloadLink.href = URL.createObjectURL(excelBlob);
+  downloadLink.download = '반복_동작_데이터_분석_평가표.xls';
+  document.body.appendChild(downloadLink);
+  downloadLink.click();
+  document.body.removeChild(downloadLink);
+}
+
+let autoControlTimer = null;
+let currentRepeatCount = 0;
+
+function startAutoControl() {
+  const repeatCountInput = document.getElementById('repeatCountInput');
+  const currentRepeatCountElement = document.getElementById('currentRepeatCount');
+  const controlStatusElement = document.getElementById('controlStatus');
+  const progressBar = document.getElementById('progressBar');
+  const z1PositionElement = document.getElementById('z1Position');
+  const z2PositionElement = document.getElementById('z2Position');
+  if (!repeatCountInput || !currentRepeatCountElement || !controlStatusElement || !progressBar || !z1PositionElement || !z2PositionElement) return;
+
+  const targetRepeatCount = Number(repeatCountInput.value) || 0;
+  if (targetRepeatCount <= 0) return;
+
+  currentRepeatCount = 0;
+  currentRepeatCountElement.textContent = currentRepeatCount.toLocaleString();
+  controlStatusElement.textContent = 'RUN';
+  progressBar.style.width = '0%';
+  z1PositionElement.textContent = '+00000';
+  z2PositionElement.textContent = '+00000';
+
+  clearInterval(autoControlTimer);
+
+  autoControlTimer = setInterval(function () {
+    currentRepeatCount += 250;
+    const cyclePosition = currentRepeatCount % 1000;
+    let zPosition = 0;
+    if (cyclePosition <= 500) {
+      zPosition = cyclePosition * 10;
+    } else {
+      zPosition = (1000 - cyclePosition) * 10;
+    }
+
+    const z1Position = zPosition;
+    const z2Position = zPosition + Math.floor(Math.random() * 5);
+
+    z1PositionElement.textContent = '+' + String(z1Position).padStart(5, '0');
+    z2PositionElement.textContent = '+' + String(z2Position).padStart(5, '0');
+
+    if (currentRepeatCount >= targetRepeatCount) {
+      currentRepeatCount = targetRepeatCount;
+      z1PositionElement.textContent = '+00000';
+      z2PositionElement.textContent = '+00000';
+      clearInterval(autoControlTimer);
+      controlStatusElement.textContent = 'COMPLETE';
+    }
+
+    const progressPercent = (currentRepeatCount / targetRepeatCount) * 100;
+    currentRepeatCountElement.textContent = currentRepeatCount.toLocaleString();
+    progressBar.style.width = progressPercent + '%';
+  }, 300);
+}
+
+function stopAutoControl() {
+  const controlStatusElement = document.getElementById('controlStatus');
+  clearInterval(autoControlTimer);
+  if (controlStatusElement) controlStatusElement.textContent = 'STOP';
+}
+
+let feature1JogTimer = null;
+let feature1JogDirection = 'forward';
+let feature1CurrentPosition = 0;
+const feature1MinimumPosition = -5000;
+const feature1MaximumPosition = 5000;
+
+function setJogDirection(direction) {
+  const forwardButton = document.getElementById('jogForwardButton');
+  const reverseButton = document.getElementById('jogReverseButton');
+  const currentDirectionElement = document.getElementById('jogCurrentDirection');
+  if (!forwardButton || !reverseButton || !currentDirectionElement) return;
+
+  feature1JogDirection = direction;
+  if (direction === 'forward') {
+    forwardButton.classList.add('active');
+    reverseButton.classList.remove('active');
+    currentDirectionElement.textContent = '정방향';
+  } else {
+    forwardButton.classList.remove('active');
+    reverseButton.classList.add('active');
+    currentDirectionElement.textContent = '역방향';
+  }
+}
+
+function startFeature1Jog() {
+  const speedInput = document.getElementById('jogSpeedInput');
+  const axisSelect = document.getElementById('jogAxisSelect');
+  const currentSpeedElement = document.getElementById('jogCurrentSpeed');
+  const currentAxisElement = document.getElementById('jogCurrentAxis');
+  const jogStatusElement = document.getElementById('jogStatus');
+  if (!speedInput || !axisSelect || !currentSpeedElement || !currentAxisElement || !jogStatusElement) return;
+
+  const speedValue = Number(speedInput.value);
+  if (speedValue <= 0) {
+    jogStatusElement.textContent = 'SPEED ERR';
+    currentSpeedElement.textContent = '0 r/min';
+    return;
+  }
+
+  clearInterval(feature1JogTimer);
+  currentSpeedElement.textContent = speedValue + ' r/min';
+  currentAxisElement.textContent = axisSelect.value;
+  jogStatusElement.textContent = 'JOG RUN';
+
+  feature1JogTimer = setInterval(function () {
+    moveFeature1JogPosition(speedValue);
+  }, 80);
+}
+
+function stopFeature1Jog() {
+  const currentSpeedElement = document.getElementById('jogCurrentSpeed');
+  const jogStatusElement = document.getElementById('jogStatus');
+  clearInterval(feature1JogTimer);
+  if (currentSpeedElement) currentSpeedElement.textContent = '0 r/min';
+  if (jogStatusElement) jogStatusElement.textContent = 'STOP';
+}
+
+function moveFeature1JogPosition(speedValue) {
+  const movementStep = Math.max(1, Math.round(speedValue / 10));
+  if (feature1JogDirection === 'forward') {
+    feature1CurrentPosition += movementStep;
+  } else {
+    feature1CurrentPosition -= movementStep;
+  }
+
+  if (feature1CurrentPosition >= feature1MaximumPosition) {
+    feature1CurrentPosition = feature1MaximumPosition;
+    stopFeature1Jog();
+  }
+  if (feature1CurrentPosition <= feature1MinimumPosition) {
+    feature1CurrentPosition = feature1MinimumPosition;
+    stopFeature1Jog();
+  }
+
+  renderFeature1CurrentPosition();
+}
+
+function renderFeature1CurrentPosition() {
+  const currentPositionElement = document.getElementById('jogCurrentPosition');
+  const positionProgressBar = document.getElementById('jogPositionProgressBar');
+  if (!currentPositionElement || !positionProgressBar) return;
+
+  const absolutePositionText = Math.abs(feature1CurrentPosition).toString().padStart(5, '0');
+  const positionPrefix = feature1CurrentPosition >= 0 ? '+' : '-';
+  currentPositionElement.textContent = positionPrefix + absolutePositionText + ' pulse';
+
+  const progressPercent = ((feature1CurrentPosition - feature1MinimumPosition) / (feature1MaximumPosition - feature1MinimumPosition)) * 100;
+  positionProgressBar.style.width = progressPercent + '%';
+}
+
+window.addEventListener('load', function () {
+  renderFeature1CurrentPosition();
+});
 </script>
 </body>
 </html>
