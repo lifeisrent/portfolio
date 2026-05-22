@@ -82,6 +82,32 @@ body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:#111;font-size:
 .d-info-content{display:flex;flex-direction:column;gap:3px;}
 .d-info-label{font-size:15px;font-weight:700;color:#0057b8;}
 .d-info-text{font-size:14px;color:#333;line-height:1.75;}
+/* ── System Diagram ── */
+.sysdiag-outer{padding:4px 0 16px 0;}
+.sysdiag-box{border:2px solid #b3d0f0;border-radius:14px;background:#fff;padding:20px 22px;display:flex;flex-direction:column;gap:16px;}
+.sysdiag-header{display:flex;align-items:center;gap:12px;border-bottom:1.5px solid #dce8f8;padding-bottom:14px;}
+.sysdiag-num{width:30px;height:30px;background:#0057b8;color:#fff;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;flex-shrink:0;}
+.sysdiag-ttl{font-size:17px;font-weight:800;color:#0057b8;}
+.sysdiag-desc{font-size:12px;color:#777;margin-top:2px;}
+.sysdiag-flow{display:flex;align-items:center;flex-wrap:wrap;justify-content:center;gap:0;padding:6px 0;}
+.sysdiag-node{display:flex;flex-direction:column;align-items:center;gap:7px;opacity:0;transform:translateY(10px);transition:opacity 0.45s ease,transform 0.45s ease;}
+.sysdiag-node.sd-vis{opacity:1;transform:translateY(0);}
+.sysdiag-icon-bg{width:68px;height:68px;border-radius:50%;background:#eaf2ff;border:2px solid #b3d0f0;display:flex;align-items:center;justify-content:center;transition:box-shadow 0.3s;}
+.sysdiag-icon-bg:hover{box-shadow:0 0 0 4px #b3d0f080;}
+.sysdiag-icon-bg i{font-size:28px;color:#0057b8;}
+.sysdiag-node-name{font-size:12.5px;font-weight:700;color:#111;text-align:center;line-height:1.4;}
+.sysdiag-node-sub{font-size:11px;color:#666;text-align:center;margin-top:-3px;}
+.sysdiag-arr{display:flex;flex-direction:column;align-items:center;gap:1px;margin:0 5px;opacity:0;transition:opacity 0.35s ease;}
+.sysdiag-arr.sd-vis{opacity:1;}
+.sysdiag-arr-label{font-size:10.5px;color:#0057b8;font-weight:700;letter-spacing:0.02em;}
+.sysdiag-arr-icon{color:#0057b8;font-size:20px;line-height:1;animation:sd-pulse 1.6s ease-in-out infinite;}
+@keyframes sd-pulse{0%,100%{opacity:1;transform:translateX(0);}55%{opacity:0.45;transform:translateX(5px);}}
+@media(max-width:768px){
+  .sysdiag-flow{flex-direction:column;}
+  .sysdiag-arr{transform:rotate(90deg);}
+  .sysdiag-arr.sd-vis{transform:rotate(90deg);}
+  .sysdiag-arr-icon{animation:none;}
+}
 .detail-right{
   flex:1;padding:32px 28px;display:flex;flex-direction:column;gap:16px;overflow-y:auto;
 }
@@ -578,58 +604,83 @@ body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:#111;font-size:
 
   <!-- TAB: 구성도 -->
   <div id="tab-z-diag" class="tab-pane active">
-    <div style="display:flex;flex-direction:column;gap:28px;">
+    <div class="sysdiag-outer">
+      <div class="sysdiag-box">
 
-      <!-- 하드웨어 구성도 -->
-      <div class="diag-wrap">
-        <div class="diag-title">하드웨어 구성도</div>
-        <pre class="mermaid">
-flowchart TD
-    PC["PC 입력 테스트 프로그램"]
-    Controller["모션 컨트롤러 양산품"]
-    Driver1["서보 드라이버1 (MEL서보)"]
-    Motor1["엔코더 모터1 (AC 서보)"]
-    Stage1["웨이퍼 스테이지 1번 축"]
-    Driver2["서보 드라이버2 (MEL서보)"]
-    Motor2["엔코더 모터2 (AC 서보)"]
-    Stage2["웨이퍼 스테이지 2번 축"]
-    PC -->|이더넷 통신| Controller
-    Controller --> Driver1
-    Driver1 --> Motor1
-    Motor1 --> Stage1
-    Controller --> Driver2
-    Driver2 --> Motor2
-    Motor2 --> Stage2
-    classDef pc fill:#ffffff,stroke:#111111,stroke-width:2px,color:#111111
-    classDef controller fill:#e8f3ff,stroke:#111111,stroke-width:2px,color:#111111
-    classDef driver fill:#eef8e8,stroke:#111111,stroke-width:2px,color:#111111
-    classDef motor fill:#fff4d8,stroke:#111111,stroke-width:2px,color:#111111
-    classDef stage fill:#f4e9ff,stroke:#111111,stroke-width:2px,color:#111111
-    class PC pc
-    class Controller controller
-    class Driver1,Driver2 driver
-    class Motor1,Motor2 motor
-    class Stage1,Stage2 stage
-        </pre>
-      </div>
+        <!-- 헤더 -->
+        <div class="sysdiag-header">
+          <div class="sysdiag-num">1</div>
+          <div>
+            <div class="sysdiag-ttl">시스템 구성도</div>
+            <div class="sysdiag-desc">시스템 연결 구조</div>
+          </div>
+        </div>
 
-      <!-- 소프트웨어 구성도 -->
-      <div class="diag-wrap">
-        <div class="diag-title">소프트웨어 구성도</div>
-        <pre class="mermaid">
-flowchart TD
-    A["미쓰비시 서보 시스템 (하드웨어)"]
-    B["미쓰비시 제어 소프트웨어"]
-    C["자체 개발 통신 인터페이스 / 프로토콜 모듈"]
-    D["자체 개발 컨트롤러"]
-    E["PC 프로그램 연동"]
-    A --> B --> C --> D --> E
-    classDef box fill:#f0f6ff,stroke:#1565C0,stroke-width:2px,color:#111111
-    class A,B,C,D,E box
-        </pre>
-      </div>
+        <!-- 플로우 -->
+        <div class="sysdiag-flow" id="sysdiag-flow-z">
 
-    </div>
+          <!-- PC 프로그램 -->
+          <div class="sysdiag-node">
+            <div class="sysdiag-icon-bg"><i class="bi bi-laptop"></i></div>
+            <div class="sysdiag-node-name">PC 프로그램</div>
+            <div class="sysdiag-node-sub">(테스트 프로그램)</div>
+          </div>
+
+          <!-- 화살표: 이더넷 -->
+          <div class="sysdiag-arr">
+            <span class="sysdiag-arr-label">이더넷</span>
+            <span class="sysdiag-arr-icon"><i class="bi bi-arrow-right"></i></span>
+          </div>
+
+          <!-- 모션 컨트롤러 -->
+          <div class="sysdiag-node">
+            <div class="sysdiag-icon-bg"><i class="bi bi-server"></i></div>
+            <div class="sysdiag-node-name">모션 컨트롤러</div>
+            <div class="sysdiag-node-sub">(양산품)</div>
+          </div>
+
+          <!-- 화살표 -->
+          <div class="sysdiag-arr">
+            <span class="sysdiag-arr-label">&nbsp;</span>
+            <span class="sysdiag-arr-icon"><i class="bi bi-arrow-right"></i></span>
+          </div>
+
+          <!-- 서보 드라이버 -->
+          <div class="sysdiag-node">
+            <div class="sysdiag-icon-bg"><i class="bi bi-cpu"></i></div>
+            <div class="sysdiag-node-name">서보 드라이버</div>
+            <div class="sysdiag-node-sub">(MEL서보)</div>
+          </div>
+
+          <!-- 화살표 -->
+          <div class="sysdiag-arr">
+            <span class="sysdiag-arr-label">&nbsp;</span>
+            <span class="sysdiag-arr-icon"><i class="bi bi-arrow-right"></i></span>
+          </div>
+
+          <!-- 엔코더 모터 -->
+          <div class="sysdiag-node">
+            <div class="sysdiag-icon-bg"><i class="bi bi-gear-fill"></i></div>
+            <div class="sysdiag-node-name">엔코더 모터</div>
+            <div class="sysdiag-node-sub">(AC 서보)</div>
+          </div>
+
+          <!-- 화살표 -->
+          <div class="sysdiag-arr">
+            <span class="sysdiag-arr-label">&nbsp;</span>
+            <span class="sysdiag-arr-icon"><i class="bi bi-arrow-right"></i></span>
+          </div>
+
+          <!-- 웨이퍼 스테이지 -->
+          <div class="sysdiag-node">
+            <div class="sysdiag-icon-bg"><i class="bi bi-disc-fill"></i></div>
+            <div class="sysdiag-node-name">웨이퍼 스테이지</div>
+            <div class="sysdiag-node-sub">(1, 2번 축)</div>
+          </div>
+
+        </div><!-- /sysdiag-flow -->
+      </div><!-- /sysdiag-box -->
+    </div><!-- /sysdiag-outer -->
   </div>
 
   <!-- TAB: 흐름도 -->
@@ -1026,6 +1077,7 @@ flowchart TD
 function showPage(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById(id).classList.add('active');
+  if (id === 'page-diag-z') setTimeout(animSysDiag, 80);
 }
 
 function switchTab(el, paneId) {
@@ -1034,6 +1086,17 @@ function switchTab(el, paneId) {
   root.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
   el.classList.add('active');
   document.getElementById(paneId).classList.add('active');
+  if (paneId === 'tab-z-diag') setTimeout(animSysDiag, 80);
+}
+
+function animSysDiag() {
+  const flow = document.getElementById('sysdiag-flow-z');
+  if (!flow) return;
+  const items = flow.querySelectorAll('.sysdiag-node, .sysdiag-arr');
+  items.forEach(el => el.classList.remove('sd-vis'));
+  items.forEach((el, i) => {
+    setTimeout(() => el.classList.add('sd-vis'), i * 130);
+  });
 }
 
 function logMsg(msg) {
