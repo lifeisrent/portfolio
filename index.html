@@ -238,12 +238,15 @@ body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:#111;font-size:
 }
 /* ── Flow vertical list (mobile) ── */
 .flow-vlist{display:none;flex-direction:column;align-items:flex-start;gap:0;font-family:'Noto Sans KR',sans-serif;}
-.fvl-step{padding:10px 20px;border-radius:8px;font-size:15px;font-weight:700;color:#111;border:2px solid #1565C0;background:#fff;min-width:200px;}
-.fvl-step.fvl-hl{background:#EBF5FF;color:#1565C0;border-color:#1565C0;}
-.fvl-step.fvl-start,.fvl-step.fvl-end{background:#1565C0;color:#fff;border-color:#1565C0;}
-.fvl-step.fvl-diamond{background:#FFF8E1;border-color:#1565C0;font-weight:900;}
-.fvl-arr{font-size:20px;color:#1565C0;padding:2px 24px;line-height:1.4;}
-.fvl-note{font-size:12px;color:#c62828;font-weight:700;padding:2px 24px;}
+.fvl-step{padding:10px 20px;border-radius:6px;font-size:15px;font-weight:700;color:#111;border:2px solid #1565C0;background:#fff;min-width:200px;text-align:center;}
+.fvl-step.fvl-hl{background:#EBF5FF;color:#1565C0;}
+.fvl-step.fvl-start,.fvl-step.fvl-end{background:#1565C0;color:#fff;border-radius:8px;}
+.fvl-arr{font-size:20px;color:#1565C0;padding:0 0 0 28px;line-height:1.6;}
+.fvl-note{font-size:12px;color:#c62828;font-weight:700;padding:4px 8px;margin-top:4px;}
+/* 마름모 (diamond) */
+.fvl-diamond-wrap{display:flex;flex-direction:column;align-items:flex-start;padding-left:4px;}
+.fvl-diamond-box{width:140px;height:140px;transform:rotate(45deg);background:#FFF8E1;border:2.5px solid #1565C0;display:flex;align-items:center;justify-content:center;margin:4px 0 4px 30px;}
+.fvl-diamond-txt{transform:rotate(-45deg);font-size:13px;font-weight:800;color:#111;text-align:center;line-height:1.45;white-space:nowrap;}
 
 /* ══════════════════════════════════════════════
    MFC PROGRAM PAGE
@@ -872,10 +875,14 @@ body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:#111;font-size:
       <div class="fvl-arr">↓</div>
       <div class="fvl-step">반복횟수 증가 ++</div>
       <div class="fvl-arr">↓</div>
-      <div class="fvl-step fvl-diamond">반복 횟수 도달 여부?</div>
+      <div class="fvl-diamond-wrap">
+        <div class="fvl-diamond-box">
+          <div class="fvl-diamond-txt">반복 횟수<br>도달?</div>
+        </div>
+      </div>
       <div class="fvl-arr">↓ Yes</div>
       <div class="fvl-step fvl-end">완료</div>
-      <div class="fvl-note">* No → Auto Cycle Start 부터 재시작</div>
+      <div class="fvl-note">↩ No → Auto Cycle Start 부터 재시작</div>
     </div>
 
   </div>
