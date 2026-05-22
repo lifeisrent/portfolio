@@ -234,6 +234,15 @@ body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:#111;font-size:
   font-size:12px;font-weight:700;border-radius:3px;
 }
 
+/* ── Detail page 1 (Z축) — 왼쪽 패널 40% / 글씨 +7pt ── */
+#page-detail-z .detail-left {
+  width: 40% !important;
+  flex: 0 0 40% !important;
+}
+#page-detail-z .d-label     { font-size: calc(12px + 7pt); letter-spacing: 1.5px; }
+#page-detail-z .d-proj-name { font-size: calc(22px + 7pt); line-height: 1.35; }
+#page-detail-z .d-period    { font-size: calc(15px + 7pt); line-height: 1.8; }
+
 /* ── Profile layout helpers ── */
 .profile-top{display:flex;flex-direction:column;align-items:center;gap:10px;width:100%;}
 .profile-info{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;}
@@ -348,6 +357,15 @@ body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:#111;font-size:
   /* ─ Popup ─ */
   .pop-box { padding:16px 14px !important; }
   .pop-title { font-size:15px !important; margin-bottom:14px !important; }
+
+  /* ─ Detail page 1 (Z축) 모바일 — 글씨 +4pt, 왼쪽 패널 full-width 복구 ─ */
+  #page-detail-z .detail-left {
+    width: 100% !important;
+    flex: none !important;
+  }
+  #page-detail-z .d-label     { font-size: calc(11px + 4pt) !important; }
+  #page-detail-z .d-proj-name { font-size: calc(17px + 4pt) !important; }
+  #page-detail-z .d-period    { font-size: calc(13px + 4pt) !important; }
 }
 </style>
 </head>
