@@ -276,7 +276,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:#111;font-size:
   .profile-cards { flex-direction:row !important; flex-wrap:wrap !important; gap:10px !important; }
   .p-card { flex:1 1 calc(50% - 5px) !important; min-width:130px; }
   .p-card-head { font-size:17px !important; }
-  .p-card-body { font-size:16px !important; line-height:1.6 !important; }
+  .p-card-body { font-size:15px !important; line-height:1.6 !important; }
 
   /* 세로 구분선 → 숨김 (border-bottom으로 대체) */
   .v-div { display:none !important; }
@@ -444,14 +444,12 @@ body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:#111;font-size:
     <!-- Row 1 -->
     <div class="proj-row" onclick="showPage('page-detail-z')">
       <div class="proj-row-num">PROJECT 01</div>
-      <div class="proj-row-title">웨이퍼 Z축 스테이지 제어</div>
+      <div class="proj-row-title">웨이퍼 스테이지 모션제어 (Z축)</div>
       <div class="proj-row-desc">
         <ul>
-          <li>엔코더 기반 Z축 모션 제어 구현</li>
-          <li>반복 횟수 및 이동 높이 설정 기능 개발</li>
-          <li>듀얼 모터 동기화 오차 개선 및 안정화</li>
-          <li>자동 반복 시퀀스 오류 수정 및 반복 동작 안정성 확보</li>
-          <li>오류 로그 분석을 통한 완료 타이밍 문제 해결</li>
+          <li>엔코더 모터 폐루프 제어</li>
+          <li>자동 왕복 기능 기획, 구현, 테스트</li>
+          <li>2중 Z축 타이밍 오차 개선 및 해결</li>
         </ul>
       </div>
       <div>
