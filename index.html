@@ -229,6 +229,21 @@ body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:#111;font-size:
   font-family:'Noto Sans KR',sans-serif;line-height:1;
 }
 .pop-title{font-size:18px;font-weight:900;color:#1565C0;margin-bottom:22px;}
+/* ── Flow popup desktop enlargement ── */
+@media(min-width:769px){
+  #pop-flow .pop-box{min-width:88vw;min-height:55vh;overflow:auto;}
+  #pop-flow .pop-title{font-size:26px !important;margin-bottom:28px !important;}
+  #pop-flow svg{width:2520px;height:550px;display:block;}
+  .flow-vlist{display:none;}
+}
+/* ── Flow vertical list (mobile) ── */
+.flow-vlist{display:none;flex-direction:column;align-items:flex-start;gap:0;font-family:'Noto Sans KR',sans-serif;}
+.fvl-step{padding:10px 20px;border-radius:8px;font-size:15px;font-weight:700;color:#111;border:2px solid #1565C0;background:#fff;min-width:200px;}
+.fvl-step.fvl-hl{background:#EBF5FF;color:#1565C0;border-color:#1565C0;}
+.fvl-step.fvl-start,.fvl-step.fvl-end{background:#1565C0;color:#fff;border-color:#1565C0;}
+.fvl-step.fvl-diamond{background:#FFF8E1;border-color:#1565C0;font-weight:900;}
+.fvl-arr{font-size:20px;color:#1565C0;padding:2px 24px;line-height:1.4;}
+.fvl-note{font-size:12px;color:#c62828;font-weight:700;padding:2px 24px;}
 
 /* ══════════════════════════════════════════════
    MFC PROGRAM PAGE
@@ -430,6 +445,8 @@ body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:#111;font-size:
   /* ─ Popup ─ */
   .pop-box { padding:16px 14px !important; }
   .pop-title { font-size:15px !important; margin-bottom:14px !important; }
+  #pop-flow svg { display:none !important; }
+  .flow-vlist { display:flex !important; }
 
   /* ─ Detail page 1 (Z축) 모바일 — 글씨 +4pt, 왼쪽 패널 full-width 복구 ─ */
   .detail-z-img { display:none !important; }
@@ -767,7 +784,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:#111;font-size:
   <div class="pop-box">
     <button class="pop-close" onclick="document.getElementById('pop-flow').classList.remove('open')">✕</button>
     <div class="pop-title">웨이퍼 Z축 — 동작 흐름도 (Sequence Flow)</div>
-    <svg viewBox="0 0 1680 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;min-width:900px;font-family:'Noto Sans KR',sans-serif;">
+    <svg viewBox="0 0 1680 220" xmlns="http://www.w3.org/2000/svg" style="font-family:'Noto Sans KR',sans-serif;display:block;">
       <defs>
         <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
           <path d="M0,0 L10,5 L0,10 Z" fill="#1565C0"/>
@@ -828,6 +845,39 @@ body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:#111;font-size:
       <line x1="588" y1="175" x2="588" y2="127" stroke="#1565C0" stroke-width="2" marker-end="url(#arr)"/>
       <text x="1100" y="170" text-anchor="middle" fill="#c62828" font-size="12" font-weight="700">No → 다음 반복 시작</text>
     </svg>
+
+    <!-- 모바일 세로 플로우 -->
+    <div class="flow-vlist">
+      <div class="fvl-step fvl-start">START</div>
+      <div class="fvl-arr">↓</div>
+      <div class="fvl-step">Servo ON</div>
+      <div class="fvl-arr">↓</div>
+      <div class="fvl-step">Home Move</div>
+      <div class="fvl-arr">↓</div>
+      <div class="fvl-step">Wait Home Complete</div>
+      <div class="fvl-arr">↓</div>
+      <div class="fvl-step fvl-hl">Auto Cycle Start</div>
+      <div class="fvl-arr">↓</div>
+      <div class="fvl-step">Move Z Up <span style="font-size:12px;font-weight:400;color:#777;">(상대위치)</span></div>
+      <div class="fvl-arr">↓</div>
+      <div class="fvl-step">Encoder Pos Polling</div>
+      <div class="fvl-arr">↓</div>
+      <div class="fvl-step">Z1/Z2 InPos Check</div>
+      <div class="fvl-arr">↓</div>
+      <div class="fvl-step">Delay</div>
+      <div class="fvl-arr">↓</div>
+      <div class="fvl-step">Move Z Down</div>
+      <div class="fvl-arr">↓</div>
+      <div class="fvl-step">엔코더 위치 피드백</div>
+      <div class="fvl-arr">↓</div>
+      <div class="fvl-step">반복횟수 증가 ++</div>
+      <div class="fvl-arr">↓</div>
+      <div class="fvl-step fvl-diamond">반복 횟수 도달 여부?</div>
+      <div class="fvl-arr">↓ Yes</div>
+      <div class="fvl-step fvl-end">완료</div>
+      <div class="fvl-note">* No → Auto Cycle Start 부터 재시작</div>
+    </div>
+
   </div>
 </div>
 
