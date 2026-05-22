@@ -530,90 +530,158 @@ body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:#111;font-size:
 
 
 <!-- ████████████████████████████████████████████
-     PAGE: PROGRAM — Z축 MFC UI
+     PAGE: PROGRAM — Z축 (Animation + Control)
 ████████████████████████████████████████████ -->
 <div id="page-prog-z" class="page" style="flex-direction:column;">
   <div class="sp-header">
     <button class="sp-back" onclick="showPage('page-detail-z')">← 돌아가기</button>
-    <span class="sp-title">웨이퍼 Z축 스테이지 제어 — 테스트 프로그램</span>
+    <span class="sp-title">웨이퍼 Z축 스테이지 제어 — 시뮬레이션</span>
   </div>
-  <div style="flex:1;display:flex;flex-direction:column;padding:12px;background:#c0c0c0;overflow:hidden;">
-    <div class="mfc-wrap" style="border:2px solid #808080;border-radius:2px;">
-      <div class="mfc-titlebar">🖥️ &nbsp;웨이퍼 Z축 스테이지 제어 프로그램 &nbsp;—&nbsp; v1.0</div>
-      <div class="mfc-body">
-        <div class="mfc-row" style="align-items:stretch;gap:12px;">
-          <div class="mfc-grp" style="min-width:220px;">
-            <span class="mfc-grp-lbl">장비 통신</span>
-            <div style="display:flex;gap:8px;margin-top:6px;">
-              <button class="mfc-btn blue" onclick="logMsg('통신 연결 시도...')">통신 연결</button>
-              <button class="mfc-btn red" onclick="logMsg('통신 해제됨.')">통신 해제</button>
-            </div>
-            <div style="margin-top:8px;display:flex;align-items:center;gap:6px;">
-              <span class="mfc-lbl" style="margin:0;">상태:</span>
-              <span id="conn-status" style="font-size:13px;font-weight:700;color:#006400;">● 연결됨</span>
-            </div>
-          </div>
-          <div class="mfc-grp" style="flex:1;">
-            <span class="mfc-grp-lbl">제어 조건</span>
-            <div class="mfc-inrow" style="margin-top:6px;gap:20px;">
-              <div>
-                <span class="mfc-lbl">반복횟수 지정</span>
-                <input class="mfc-input" type="number" value="10" min="1" max="9999" id="rep-input">
-              </div>
-              <div>
-                <span class="mfc-lbl">현재 반복횟수</span>
-                <span class="mfc-led" id="rep-cur">0000</span>
-              </div>
-              <div>
-                <span class="mfc-lbl">이동 높이 (pulse)</span>
-                <input class="mfc-input" type="number" value="5000" style="width:88px;">
-              </div>
-            </div>
-          </div>
+
+  <div style="flex:1;display:flex;overflow:hidden;min-height:0;">
+
+    <!-- ── LEFT: 2D Animation ── -->
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 24px;background:#f0f4ff;gap:14px;">
+
+      <div style="font-size:15px;font-weight:700;color:#1565C0;letter-spacing:1px;">웨이퍼 Z축 스테이지 시뮬레이션</div>
+
+      <!-- SVG Stage Diagram -->
+      <svg id="stage-svg" viewBox="0 0 460 295" style="width:100%;max-width:520px;background:#fff;border:2.5px solid #1565C0;border-radius:10px;">
+        <defs>
+          <marker id="zaxarr" viewBox="0 0 10 10" refX="5" refY="1" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M0,10 L5,0 L10,10 Z" fill="#1565C0"/>
+          </marker>
+          <!-- hatching for base -->
+          <pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)">
+            <line x1="0" y1="0" x2="0" y2="6" stroke="#546e7a" stroke-width="1.5"/>
+          </pattern>
+        </defs>
+
+        <!-- Z-axis arrow (left side) -->
+        <line x1="28" y1="258" x2="28" y2="38" stroke="#1565C0" stroke-width="2" marker-end="url(#zaxarr)"/>
+        <text x="16" y="42" font-size="11" font-weight="700" fill="#1565C0" font-family="Noto Sans KR,sans-serif">+Z</text>
+        <text x="18" y="268" font-size="11" font-weight="700" fill="#555" font-family="Noto Sans KR,sans-serif">0</text>
+        <!-- scale ticks -->
+        <line x1="23" y1="88" x2="33" y2="88" stroke="#1565C0" stroke-width="1" stroke-dasharray="2,2"/>
+        <line x1="23" y1="148" x2="33" y2="148" stroke="#1565C0" stroke-width="1" stroke-dasharray="2,2"/>
+        <line x1="23" y1="208" x2="33" y2="208" stroke="#1565C0" stroke-width="1" stroke-dasharray="2,2"/>
+
+        <!-- ══ STAGE A ══ -->
+        <!-- Fixed label -->
+        <text x="155" y="20" font-size="13" font-weight="900" fill="#1565C0" text-anchor="middle" font-family="Noto Sans KR,sans-serif">STAGE A</text>
+        <!-- Base plate (fixed) -->
+        <rect x="82" y="248" width="146" height="22" rx="2" fill="#78909c"/>
+        <rect x="82" y="248" width="146" height="22" rx="2" fill="url(#hatch)" opacity="0.3"/>
+        <!-- Left guide rail -->
+        <rect x="98" y="88" width="12" height="160" fill="#546e7a"/>
+        <rect x="98" y="88" width="12" height="160" fill="url(#hatch)" opacity="0.2"/>
+        <!-- Right guide rail -->
+        <rect x="200" y="88" width="12" height="160" fill="#546e7a"/>
+        <rect x="200" y="88" width="12" height="160" fill="url(#hatch)" opacity="0.2"/>
+        <!-- Ball screw (center, decorative) -->
+        <rect x="150" y="93" width="6" height="155" fill="#90a4ae"/>
+
+        <!-- Moving group A — translateY changes with animation -->
+        <g id="stageA-group" transform="translate(0,0)">
+          <!-- Carriage body -->
+          <rect x="86" y="210" width="138" height="38" rx="3" fill="#b0bec5" stroke="#546e7a" stroke-width="1.5"/>
+          <!-- Screw nut highlight -->
+          <rect x="147" y="218" width="14" height="22" rx="2" fill="#78909c" stroke="#455a64" stroke-width="1"/>
+          <!-- Stage surface plate -->
+          <rect x="78" y="191" width="154" height="19" rx="2" fill="#eceff1" stroke="#1565C0" stroke-width="2"/>
+          <!-- Wafer (outer) -->
+          <ellipse cx="155" cy="187" rx="64" ry="13" fill="#e3f2fd" stroke="#1565C0" stroke-width="2"/>
+          <!-- Wafer (inner ring) -->
+          <ellipse cx="155" cy="187" rx="46" ry="8.5" fill="none" stroke="#90caf9" stroke-width="1.2" stroke-dasharray="5,3"/>
+          <!-- Wafer center dot -->
+          <circle cx="155" cy="187" r="3.5" fill="#1565C0" opacity="0.5"/>
+        </g>
+
+        <!-- ══ STAGE B ══ -->
+        <text x="315" y="20" font-size="13" font-weight="900" fill="#1565C0" text-anchor="middle" font-family="Noto Sans KR,sans-serif">STAGE B</text>
+        <!-- Base plate (fixed) -->
+        <rect x="242" y="248" width="146" height="22" rx="2" fill="#78909c"/>
+        <rect x="242" y="248" width="146" height="22" rx="2" fill="url(#hatch)" opacity="0.3"/>
+        <!-- Left guide rail -->
+        <rect x="258" y="88" width="12" height="160" fill="#546e7a"/>
+        <rect x="258" y="88" width="12" height="160" fill="url(#hatch)" opacity="0.2"/>
+        <!-- Right guide rail -->
+        <rect x="360" y="88" width="12" height="160" fill="#546e7a"/>
+        <rect x="360" y="88" width="12" height="160" fill="url(#hatch)" opacity="0.2"/>
+        <!-- Ball screw -->
+        <rect x="310" y="93" width="6" height="155" fill="#90a4ae"/>
+
+        <!-- Moving group B -->
+        <g id="stageB-group" transform="translate(0,0)">
+          <rect x="246" y="210" width="138" height="38" rx="3" fill="#b0bec5" stroke="#546e7a" stroke-width="1.5"/>
+          <rect x="307" y="218" width="14" height="22" rx="2" fill="#78909c" stroke="#455a64" stroke-width="1"/>
+          <rect x="238" y="191" width="154" height="19" rx="2" fill="#eceff1" stroke="#1565C0" stroke-width="2"/>
+          <ellipse cx="315" cy="187" rx="64" ry="13" fill="#e3f2fd" stroke="#1565C0" stroke-width="2"/>
+          <ellipse cx="315" cy="187" rx="46" ry="8.5" fill="none" stroke="#90caf9" stroke-width="1.2" stroke-dasharray="5,3"/>
+          <circle cx="315" cy="187" r="3.5" fill="#1565C0" opacity="0.5"/>
+        </g>
+
+        <!-- ── Sync bar ── -->
+        <rect x="50" y="276" width="360" height="14" rx="7" fill="#e0e0e0"/>
+        <rect id="sync-bar" x="50" y="276" width="360" height="14" rx="7" fill="#66bb6a"/>
+        <text id="sync-text" x="230" y="287" font-size="10" font-weight="700" fill="#fff" text-anchor="middle" font-family="Noto Sans KR,sans-serif">동기화 정상</text>
+      </svg>
+
+      <!-- Position readout row -->
+      <div style="display:flex;gap:24px;align-items:center;flex-wrap:wrap;justify-content:center;">
+        <div style="display:flex;align-items:center;gap:6px;">
+          <span style="font-size:13px;font-weight:700;color:#555;">Z1</span>
+          <span id="anim-pos-a" style="font-family:monospace;font-size:15px;font-weight:700;color:#1565C0;background:#e8f0fe;padding:3px 10px;border-radius:4px;">+00000</span>
         </div>
-        <div class="mfc-row" style="align-items:stretch;gap:12px;">
-          <div class="mfc-grp" style="flex:1;">
-            <span class="mfc-grp-lbl">1번 축 &nbsp;<span class="axis-badge">AXIS 1</span></span>
-            <div class="mfc-axis-grid" style="margin-top:10px;">
-              <span class="mfc-lbl">현재 위치</span>
-              <span class="mfc-led" id="ax1-pos">+00000</span>
-              <span class="mfc-lbl">동작 상태</span>
-              <span class="mfc-led" style="color:#ffcc00;" id="ax1-stat">IDLE</span>
-              <span class="mfc-lbl">동기화</span>
-              <span class="mfc-led" style="color:#00ff41;" id="ax1-sync">OK</span>
-            </div>
-          </div>
-          <div class="mfc-grp" style="flex:1;">
-            <span class="mfc-grp-lbl">2번 축 &nbsp;<span class="axis-badge">AXIS 2</span></span>
-            <div class="mfc-axis-grid" style="margin-top:10px;">
-              <span class="mfc-lbl">현재 위치</span>
-              <span class="mfc-led" id="ax2-pos">+00000</span>
-              <span class="mfc-lbl">동작 상태</span>
-              <span class="mfc-led" style="color:#ffcc00;" id="ax2-stat">IDLE</span>
-              <span class="mfc-lbl">동기화</span>
-              <span class="mfc-led" style="color:#00ff41;" id="ax2-sync">OK</span>
-            </div>
-          </div>
-          <div class="mfc-ctrl-col" style="padding-top:10px;">
-            <button class="mfc-btn green" style="font-size:16px;padding:12px 24px;" onclick="startCycle()">▶ 시작</button>
-            <button class="mfc-btn red" style="font-size:16px;padding:12px 24px;" onclick="stopCycle()">■ 정지</button>
-            <button class="mfc-btn" style="font-size:14px;padding:10px 20px;" onclick="homeMove()">↩ 원점 복귀</button>
-          </div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <span style="font-size:13px;font-weight:700;color:#555;">Z2</span>
+          <span id="anim-pos-b" style="font-family:monospace;font-size:15px;font-weight:700;color:#1565C0;background:#e8f0fe;padding:3px 10px;border-radius:4px;">+00000</span>
         </div>
-        <div class="mfc-log-area">
-          <div class="mfc-grp" style="flex:1;display:flex;flex-direction:column;min-height:0;">
-            <span class="mfc-grp-lbl">동작 로그</span>
-            <div class="mfc-log" id="log-box" style="margin-top:6px;flex:1;">
-              <span style="color:#aaa;">[시스템] 프로그램 초기화 완료. 통신 연결 대기 중...</span>
-            </div>
-            <div class="mfc-log-btns">
-              <button class="mfc-btn" onclick="logMsg('작동 이력을 불러옵니다...')">📋 작동 이력 확인</button>
-              <button class="mfc-btn blue" onclick="logMsg('EXCEL 파일로 저장 중...')">💾 EXCEL 저장</button>
-            </div>
-          </div>
-        </div>
+        <div id="anim-status-badge" style="padding:4px 16px;border-radius:5px;font-size:14px;font-weight:700;border:2px solid #aaa;color:#555;background:#fff;">● IDLE</div>
       </div>
     </div>
+
+    <!-- Vertical divider -->
+    <div style="width:3px;background:#1565C0;flex-shrink:0;"></div>
+
+    <!-- ── RIGHT: MFC Control Panel (compact) ── -->
+    <div style="width:300px;flex-shrink:0;display:flex;flex-direction:column;background:#c0c0c0;overflow:hidden;">
+      <div class="mfc-titlebar" style="font-size:13px;padding:6px 12px;">🖥️ Z축 제어 패널</div>
+      <div style="flex:1;display:flex;flex-direction:column;padding:10px;gap:10px;overflow:hidden;">
+
+        <!-- 반복 조건 -->
+        <div class="mfc-grp">
+          <span class="mfc-grp-lbl">반복 조건</span>
+          <div style="display:grid;grid-template-columns:auto 1fr;gap:6px 10px;align-items:center;margin-top:8px;">
+            <span class="mfc-lbl" style="margin:0;">반복횟수 지정</span>
+            <input class="mfc-input" type="number" value="5" min="1" max="99" id="rep-input" style="width:60px;">
+            <span class="mfc-lbl" style="margin:0;">현재 반복횟수</span>
+            <span class="mfc-led" id="rep-cur" style="font-size:15px;width:60px;">00</span>
+          </div>
+        </div>
+
+        <!-- 제어 버튼 -->
+        <div class="mfc-grp">
+          <span class="mfc-grp-lbl">제어</span>
+          <div style="display:flex;flex-direction:column;gap:7px;margin-top:8px;">
+            <button class="mfc-btn green" style="font-size:15px;padding:10px;" onclick="startCycle()">▶ 반복 시작</button>
+            <button class="mfc-btn red" style="font-size:15px;padding:10px;" onclick="stopCycle()">■ 정지</button>
+            <button class="mfc-btn" style="font-size:14px;padding:9px;background:#5D4037;color:#fff;border-color:#a0522d #2c1a0e #2c1a0e #a0522d;" onclick="triggerError()">⚠ 오류 발생</button>
+            <button class="mfc-btn" style="font-size:13px;padding:8px;" onclick="homeMove()">↩ 원점 복귀</button>
+          </div>
+        </div>
+
+        <!-- 로그 -->
+        <div class="mfc-grp" style="flex:1;display:flex;flex-direction:column;min-height:0;">
+          <span class="mfc-grp-lbl">동작 로그</span>
+          <div class="mfc-log" id="log-box" style="flex:1;margin-top:6px;font-size:12px;">
+            <span style="color:#aaa;">[시스템] 초기화 완료 — 원점 대기</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -777,66 +845,167 @@ function switchTab(el, paneId) {
 
 function logMsg(msg) {
   const box = document.getElementById('log-box');
+  if (!box) return;
   const ts = new Date().toTimeString().slice(0,8);
   box.innerHTML += `<br><span style="color:#aaa;">[${ts}]</span> ${msg}`;
   box.scrollTop = box.scrollHeight;
 }
 
-let cycleInterval = null;
-let cycleCount = 0;
-let running = false;
+// ─────────────────────────────────────────────
+// Z축 Animation Engine
+// ─────────────────────────────────────────────
+const MAX_TRAVEL = 120;   // SVG px: home(0) → top(+Z)
+const PULSE_MAX  = 5000;  // encoder pulses at top
+const SPD_NORMAL = 1.4;   // pos units/sec  (0→1 in ~0.71s)
+const SPD_SLOW   = 0.45;  // slow B speed in error mode
+
+let animRunning = false;
+let animError   = false;
+let posA = 0, posB = 0;       // 0=home, 1=top
+let dirA = 1, dirB = 1;       // 1=up, -1=down
+let repsDoneA = 0;             // completed full cycles (A is reference)
+let repTarget  = 5;
+let lastTs = null;
+
+function animTick(ts) {
+  if (!animRunning) return;
+  if (!lastTs) { lastTs = ts; requestAnimationFrame(animTick); return; }
+  const dt = Math.min((ts - lastTs) / 1000, 0.05);
+  lastTs = ts;
+
+  const spdA = SPD_NORMAL;
+  const spdB = animError ? SPD_SLOW : SPD_NORMAL;
+
+  // ── Update A ──
+  posA += dirA * spdA * dt;
+  if (posA >= 1) { posA = 1; dirA = -1; }
+  if (posA <= 0 && dirA === -1) {
+    posA = 0; dirA = 1;
+    repsDoneA++;
+    document.getElementById('rep-cur').textContent = String(repsDoneA).padStart(2,'0');
+    const errTag = animError ? ' <span style="color:#ffcc00">⚠ 오류모드</span>' : '';
+    logMsg('반복 ' + repsDoneA + '/' + repTarget + ' 완료' + errTag);
+    if (repsDoneA >= repTarget) {
+      animRunning = false;
+      // smoothly return B to home too
+      posB = 0; dirB = 1;
+      renderStages();
+      setBadge('DONE', '#1565C0');
+      logMsg('<span style="color:#00ff41;">✔ 사이클 완료 (Complete)</span>');
+      return;
+    }
+  }
+
+  // ── Update B ──
+  posB += dirB * spdB * dt;
+  if (posB >= 1) { posB = 1; dirB = -1; }
+  if (posB <= 0 && dirB === -1) { posB = 0; dirB = 1; }
+
+  renderStages();
+  requestAnimationFrame(animTick);
+}
+
+function renderStages() {
+  const yA = -(MAX_TRAVEL * posA);
+  const yB = -(MAX_TRAVEL * posB);
+
+  const grpA = document.getElementById('stageA-group');
+  const grpB = document.getElementById('stageB-group');
+  if (grpA) grpA.setAttribute('transform', `translate(0,${yA.toFixed(2)})`);
+  if (grpB) grpB.setAttribute('transform', `translate(0,${yB.toFixed(2)})`);
+
+  const pA = Math.round(posA * PULSE_MAX);
+  const pB = Math.round(posB * PULSE_MAX);
+  const fmtA = '+' + String(pA).padStart(5,'0');
+  const fmtB = '+' + String(pB).padStart(5,'0');
+
+  const elA = document.getElementById('anim-pos-a');
+  const elB = document.getElementById('anim-pos-b');
+  if (elA) elA.textContent = fmtA;
+  if (elB) elB.textContent = fmtB;
+
+  // Sync bar
+  const diff = Math.abs(posA - posB);
+  const ratio = Math.max(0, 1 - diff * 2.5);
+  const hue = Math.round(ratio * 120);  // 120=green, 0=red
+  const barColor = animError ? `hsl(${hue},80%,38%)` : '#4caf50';
+  const barEl = document.getElementById('sync-bar');
+  const txtEl = document.getElementById('sync-text');
+  if (barEl) {
+    barEl.setAttribute('width', Math.round(360 * Math.max(ratio, 0.04)));
+    barEl.setAttribute('fill', barColor);
+  }
+  if (txtEl) {
+    txtEl.textContent = animError
+      ? `동기화 오차: ${Math.round(diff * PULSE_MAX)}p`
+      : '동기화 정상';
+  }
+}
+
+function setBadge(label, color) {
+  const b = document.getElementById('anim-status-badge');
+  if (!b) return;
+  b.textContent = '● ' + label;
+  b.style.borderColor = color;
+  b.style.color = color;
+}
 
 function startCycle() {
-  if (running) return;
-  running = true;
-  cycleCount = 0;
-  const target = parseInt(document.getElementById('rep-input').value) || 10;
-  logMsg('<span style="color:#00ff41;">▶ 자동 사이클 시작 — 목표 반복횟수: ' + target + '</span>');
-  document.getElementById('ax1-stat').textContent = 'RUN';
-  document.getElementById('ax1-stat').style.color = '#ff9900';
-  document.getElementById('ax2-stat').textContent = 'RUN';
-  document.getElementById('ax2-stat').style.color = '#ff9900';
-  cycleInterval = setInterval(() => {
-    cycleCount++;
-    const pos = cycleCount * 500;
-    document.getElementById('ax1-pos').textContent = '+' + String(pos).padStart(5,'0');
-    document.getElementById('ax2-pos').textContent = '+' + String(pos + Math.floor(Math.random()*3)).padStart(5,'0');
-    document.getElementById('rep-cur').textContent = String(cycleCount).padStart(4,'0');
-    logMsg('반복 ' + cycleCount + '/' + target + ' — Z Up → InPos Check → Z Down 완료');
-    if (cycleCount >= target) {
-      clearInterval(cycleInterval);
-      running = false;
-      document.getElementById('ax1-stat').textContent = 'DONE';
-      document.getElementById('ax1-stat').style.color = '#00ff41';
-      document.getElementById('ax2-stat').textContent = 'DONE';
-      document.getElementById('ax2-stat').style.color = '#00ff41';
-      logMsg('<span style="color:#00ff41;">■ 사이클 완료 (Complete)</span>');
-    }
-  }, 800);
+  if (animRunning) return;
+  repTarget   = parseInt(document.getElementById('rep-input').value) || 5;
+  repsDoneA   = 0;
+  posA = posB = 0;
+  dirA = dirB = 1;
+  animError   = false;
+  animRunning = true;
+  lastTs = null;
+  document.getElementById('rep-cur').textContent = '00';
+  const svg = document.getElementById('stage-svg');
+  if (svg) svg.style.borderColor = '#1565C0';
+  setBadge('RUN', '#ff9900');
+  logMsg('<span style="color:#00ff41;">▶ 반복 시작 — 목표: ' + repTarget + '회</span>');
+  requestAnimationFrame(animTick);
 }
 
 function stopCycle() {
-  if (cycleInterval) clearInterval(cycleInterval);
-  running = false;
-  document.getElementById('ax1-stat').textContent = 'STOP';
-  document.getElementById('ax1-stat').style.color = '#ff4444';
-  document.getElementById('ax2-stat').textContent = 'STOP';
-  document.getElementById('ax2-stat').style.color = '#ff4444';
-  logMsg('<span style="color:#ff4444;">■ 정지 명령 수신 — 동작 중단</span>');
+  animRunning = false;
+  setBadge('STOP', '#f44336');
+  logMsg('<span style="color:#ff4444;">■ 정지</span>');
+}
+
+function triggerError() {
+  if (!animRunning) {
+    logMsg('<span style="color:#ffcc00;">⚠ 먼저 반복 시작을 눌러주세요</span>');
+    return;
+  }
+  animError = true;
+  setBadge('ERROR', '#f44336');
+  // Flash SVG border red
+  const svg = document.getElementById('stage-svg');
+  if (svg) {
+    svg.style.borderColor = '#f44336';
+    svg.style.boxShadow = '0 0 18px 4px rgba(244,67,54,0.4)';
+    setTimeout(() => {
+      svg.style.borderColor = '#1565C0';
+      svg.style.boxShadow = 'none';
+    }, 2500);
+  }
+  logMsg('<span style="color:#ffcc00;">⚠ 오류 발생 — STAGE B 속도 저하 감지 (동기화 오차 증가 중)</span>');
 }
 
 function homeMove() {
-  logMsg('원점 복귀 중...');
-  setTimeout(() => {
-    document.getElementById('ax1-pos').textContent = '+00000';
-    document.getElementById('ax2-pos').textContent = '+00000';
-    document.getElementById('ax1-stat').textContent = 'IDLE';
-    document.getElementById('ax1-stat').style.color = '#ffcc00';
-    document.getElementById('ax2-stat').textContent = 'IDLE';
-    document.getElementById('ax2-stat').style.color = '#ffcc00';
-    document.getElementById('rep-cur').textContent = '0000';
-    logMsg('<span style="color:#00ff41;">원점 복귀 완료</span>');
-  }, 1200);
+  animRunning = false;
+  animError   = false;
+  posA = posB = 0;
+  dirA = dirB = 1;
+  repsDoneA   = 0;
+  renderStages();
+  const rc = document.getElementById('rep-cur');
+  if (rc) rc.textContent = '00';
+  const svg = document.getElementById('stage-svg');
+  if (svg) { svg.style.borderColor = '#1565C0'; svg.style.boxShadow = 'none'; }
+  setBadge('IDLE', '#555');
+  logMsg('원점 복귀 완료 — Z1: +00000 / Z2: +00000');
 }
 </script>
 </body>
