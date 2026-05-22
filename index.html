@@ -102,6 +102,29 @@ body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:#111;font-size:
 .sysdiag-arr-label{font-size:10.5px;color:#0057b8;font-weight:700;letter-spacing:0.02em;}
 .sysdiag-arr-icon{color:#0057b8;font-size:20px;line-height:1;animation:sd-pulse 1.6s ease-in-out infinite;}
 @keyframes sd-pulse{0%,100%{opacity:1;transform:translateX(0);}55%{opacity:0.45;transform:translateX(5px);}}
+/* ── HTML Diagram (구성도 탭) ── */
+.hdiag-section{display:flex;flex-direction:column;gap:24px;}
+.hdiag-block{border:1.5px solid #d0e4f7;border-radius:12px;padding:18px 20px;background:#fafcff;}
+.hdiag-block-title{font-size:14px;font-weight:800;color:#0057b8;margin-bottom:14px;letter-spacing:0.02em;}
+/* 가로 플로우 (하드웨어) */
+.hdiag-hflow{display:flex;align-items:flex-start;flex-wrap:wrap;gap:4px;}
+.hdiag-node{display:flex;flex-direction:column;align-items:center;gap:5px;}
+.hdiag-node-box{padding:8px 14px;border-radius:8px;font-size:12.5px;font-weight:600;color:#111;border:1.5px solid #bbb;text-align:center;line-height:1.4;min-width:80px;}
+.hdiag-node-sub{font-size:11px;color:#777;text-align:center;}
+.hdiag-node-box.c-pc{background:#fff;border-color:#aaa;}
+.hdiag-node-box.c-ctrl{background:#e8f3ff;border-color:#90bce8;}
+.hdiag-node-box.c-drv{background:#eef8e8;border-color:#8ec88e;}
+.hdiag-node-box.c-mtr{background:#fff4d8;border-color:#d4b96a;}
+.hdiag-node-box.c-stg{background:#f4e9ff;border-color:#c39ee0;}
+.hdiag-harrow{display:flex;flex-direction:column;align-items:center;gap:1px;padding-top:10px;color:#0057b8;font-size:13px;}
+.hdiag-harrow span{font-size:10px;color:#0057b8;font-weight:700;}
+/* 분기 컨테이너 */
+.hdiag-branch{display:flex;flex-direction:column;gap:8px;}
+.hdiag-branch-row{display:flex;align-items:center;gap:4px;}
+/* 세로 플로우 (소프트웨어) */
+.hdiag-vflow{display:flex;flex-direction:column;align-items:flex-start;gap:0;}
+.hdiag-vnode{padding:9px 18px;border-radius:8px;font-size:13px;font-weight:600;color:#111;border:1.5px solid #90bce8;background:#f0f6ff;min-width:260px;text-align:left;}
+.hdiag-varrow{color:#0057b8;font-size:18px;padding-left:20px;line-height:1.2;}
 @media(max-width:768px){
   .sysdiag-flow{flex-direction:column;}
   .sysdiag-arr{transform:rotate(90deg);}
@@ -581,11 +604,57 @@ body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:#111;font-size:
   <div class="v-div"></div>
   <div class="detail-right">
     <div class="d-back-btn d-back-btn-z" onclick="showPage('page-main')">← 메인으로 돌아가기</div>
-    <div class="d-nav-row" style="flex:1;" onclick="showPage('page-diag-z')">
-      <div class="d-nav-title">📐 구성도</div>
-      <div class="d-nav-desc">시스템 구성 및 동작 흐름도를 확인합니다.</div>
-      <span class="badge">모니터링</span>
-      <span class="badge">폐루프 제어</span>
+    <div class="d-nav-row" style="flex:1;cursor:pointer;" onclick="showPage('page-diag-z')">
+      <div class="sysdiag-header" style="padding-bottom:10px;border-bottom:1.5px solid #dce8f8;margin-bottom:12px;">
+        <div class="sysdiag-num">1</div>
+        <div>
+          <div class="sysdiag-ttl">시스템 구성도</div>
+          <div class="sysdiag-desc">시스템 연결 구조 · 클릭하여 상세 다이어그램 보기</div>
+        </div>
+      </div>
+      <div class="sysdiag-flow" id="sysdiag-flow-det">
+        <div class="sysdiag-node">
+          <div class="sysdiag-icon-bg"><i class="bi bi-laptop"></i></div>
+          <div class="sysdiag-node-name">PC 프로그램</div>
+          <div class="sysdiag-node-sub">(테스트 프로그램)</div>
+        </div>
+        <div class="sysdiag-arr">
+          <span class="sysdiag-arr-label">이더넷</span>
+          <span class="sysdiag-arr-icon"><i class="bi bi-arrow-right"></i></span>
+        </div>
+        <div class="sysdiag-node">
+          <div class="sysdiag-icon-bg"><i class="bi bi-server"></i></div>
+          <div class="sysdiag-node-name">모션 컨트롤러</div>
+          <div class="sysdiag-node-sub">(양산품)</div>
+        </div>
+        <div class="sysdiag-arr">
+          <span class="sysdiag-arr-label">&nbsp;</span>
+          <span class="sysdiag-arr-icon"><i class="bi bi-arrow-right"></i></span>
+        </div>
+        <div class="sysdiag-node">
+          <div class="sysdiag-icon-bg"><i class="bi bi-cpu"></i></div>
+          <div class="sysdiag-node-name">서보 드라이버</div>
+          <div class="sysdiag-node-sub">(MEL서보)</div>
+        </div>
+        <div class="sysdiag-arr">
+          <span class="sysdiag-arr-label">&nbsp;</span>
+          <span class="sysdiag-arr-icon"><i class="bi bi-arrow-right"></i></span>
+        </div>
+        <div class="sysdiag-node">
+          <div class="sysdiag-icon-bg"><i class="bi bi-gear-fill"></i></div>
+          <div class="sysdiag-node-name">엔코더 모터</div>
+          <div class="sysdiag-node-sub">(AC 서보)</div>
+        </div>
+        <div class="sysdiag-arr">
+          <span class="sysdiag-arr-label">&nbsp;</span>
+          <span class="sysdiag-arr-icon"><i class="bi bi-arrow-right"></i></span>
+        </div>
+        <div class="sysdiag-node">
+          <div class="sysdiag-icon-bg"><i class="bi bi-disc-fill"></i></div>
+          <div class="sysdiag-node-name">웨이퍼 스테이지</div>
+          <div class="sysdiag-node-sub">(1, 2번 축)</div>
+        </div>
+      </div>
     </div>
     <div class="d-nav-row" style="flex:1;" onclick="showPage('page-prog-z')">
       <div class="d-nav-title">💻 프로그램</div>
@@ -612,83 +681,63 @@ body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:#111;font-size:
 
   <!-- TAB: 구성도 -->
   <div id="tab-z-diag" class="tab-pane active">
-    <div class="sysdiag-outer">
-      <div class="sysdiag-box">
+    <div class="hdiag-section">
 
-        <!-- 헤더 -->
-        <div class="sysdiag-header">
-          <div class="sysdiag-num">1</div>
-          <div>
-            <div class="sysdiag-ttl">시스템 구성도</div>
-            <div class="sysdiag-desc">시스템 연결 구조</div>
+      <!-- 하드웨어 구성도 -->
+      <div class="hdiag-block">
+        <div class="hdiag-block-title">▎ 하드웨어 구성도</div>
+        <div class="hdiag-hflow">
+          <!-- PC -->
+          <div class="hdiag-node">
+            <div class="hdiag-node-box c-pc">PC 프로그램<br><span style="font-size:11px;font-weight:400;">(테스트 프로그램)</span></div>
+          </div>
+          <!-- 화살표: 이더넷 -->
+          <div class="hdiag-harrow"><span>이더넷</span>→</div>
+          <!-- 모션 컨트롤러 -->
+          <div class="hdiag-node">
+            <div class="hdiag-node-box c-ctrl">모션 컨트롤러<br><span style="font-size:11px;font-weight:400;">(양산품)</span></div>
+          </div>
+          <!-- 분기 화살표 -->
+          <div class="hdiag-harrow">→</div>
+          <!-- 2채널 분기 -->
+          <div class="hdiag-branch">
+            <!-- 채널 1 -->
+            <div class="hdiag-branch-row">
+              <div class="hdiag-node-box c-drv">서보 드라이버 1<br><span style="font-size:11px;font-weight:400;">(MEL서보)</span></div>
+              <div class="hdiag-harrow">→</div>
+              <div class="hdiag-node-box c-mtr">엔코더 모터 1<br><span style="font-size:11px;font-weight:400;">(AC 서보)</span></div>
+              <div class="hdiag-harrow">→</div>
+              <div class="hdiag-node-box c-stg">스테이지 1번 축</div>
+            </div>
+            <!-- 채널 2 -->
+            <div class="hdiag-branch-row">
+              <div class="hdiag-node-box c-drv">서보 드라이버 2<br><span style="font-size:11px;font-weight:400;">(MEL서보)</span></div>
+              <div class="hdiag-harrow">→</div>
+              <div class="hdiag-node-box c-mtr">엔코더 모터 2<br><span style="font-size:11px;font-weight:400;">(AC 서보)</span></div>
+              <div class="hdiag-harrow">→</div>
+              <div class="hdiag-node-box c-stg">스테이지 2번 축</div>
+            </div>
           </div>
         </div>
+      </div>
 
-        <!-- 플로우 -->
-        <div class="sysdiag-flow" id="sysdiag-flow-z">
+      <!-- 소프트웨어 구성도 -->
+      <div class="hdiag-block">
+        <div class="hdiag-block-title">▎ 소프트웨어 구성도</div>
+        <div class="hdiag-vflow">
+          <div class="hdiag-vnode">미쓰비시 서보 시스템 (하드웨어)</div>
+          <div class="hdiag-varrow">↓</div>
+          <div class="hdiag-vnode">미쓰비시 제어 소프트웨어</div>
+          <div class="hdiag-varrow">↓</div>
+          <div class="hdiag-vnode">자체 개발 통신 인터페이스 / 프로토콜 모듈</div>
+          <div class="hdiag-varrow">↓</div>
+          <div class="hdiag-vnode">자체 개발 컨트롤러</div>
+          <div class="hdiag-varrow">↓</div>
+          <div class="hdiag-vnode">PC 프로그램 연동</div>
+        </div>
+      </div>
 
-          <!-- PC 프로그램 -->
-          <div class="sysdiag-node">
-            <div class="sysdiag-icon-bg"><i class="bi bi-laptop"></i></div>
-            <div class="sysdiag-node-name">PC 프로그램</div>
-            <div class="sysdiag-node-sub">(테스트 프로그램)</div>
-          </div>
-
-          <!-- 화살표: 이더넷 -->
-          <div class="sysdiag-arr">
-            <span class="sysdiag-arr-label">이더넷</span>
-            <span class="sysdiag-arr-icon"><i class="bi bi-arrow-right"></i></span>
-          </div>
-
-          <!-- 모션 컨트롤러 -->
-          <div class="sysdiag-node">
-            <div class="sysdiag-icon-bg"><i class="bi bi-server"></i></div>
-            <div class="sysdiag-node-name">모션 컨트롤러</div>
-            <div class="sysdiag-node-sub">(양산품)</div>
-          </div>
-
-          <!-- 화살표 -->
-          <div class="sysdiag-arr">
-            <span class="sysdiag-arr-label">&nbsp;</span>
-            <span class="sysdiag-arr-icon"><i class="bi bi-arrow-right"></i></span>
-          </div>
-
-          <!-- 서보 드라이버 -->
-          <div class="sysdiag-node">
-            <div class="sysdiag-icon-bg"><i class="bi bi-cpu"></i></div>
-            <div class="sysdiag-node-name">서보 드라이버</div>
-            <div class="sysdiag-node-sub">(MEL서보)</div>
-          </div>
-
-          <!-- 화살표 -->
-          <div class="sysdiag-arr">
-            <span class="sysdiag-arr-label">&nbsp;</span>
-            <span class="sysdiag-arr-icon"><i class="bi bi-arrow-right"></i></span>
-          </div>
-
-          <!-- 엔코더 모터 -->
-          <div class="sysdiag-node">
-            <div class="sysdiag-icon-bg"><i class="bi bi-gear-fill"></i></div>
-            <div class="sysdiag-node-name">엔코더 모터</div>
-            <div class="sysdiag-node-sub">(AC 서보)</div>
-          </div>
-
-          <!-- 화살표 -->
-          <div class="sysdiag-arr">
-            <span class="sysdiag-arr-label">&nbsp;</span>
-            <span class="sysdiag-arr-icon"><i class="bi bi-arrow-right"></i></span>
-          </div>
-
-          <!-- 웨이퍼 스테이지 -->
-          <div class="sysdiag-node">
-            <div class="sysdiag-icon-bg"><i class="bi bi-disc-fill"></i></div>
-            <div class="sysdiag-node-name">웨이퍼 스테이지</div>
-            <div class="sysdiag-node-sub">(1, 2번 축)</div>
-          </div>
-
-        </div><!-- /sysdiag-flow -->
-      </div><!-- /sysdiag-box -->
-    </div><!-- /sysdiag-outer -->
+    </div>
   </div>
 
   <!-- TAB: 흐름도 -->
@@ -1085,7 +1134,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:#111;font-size:
 function showPage(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  if (id === 'page-diag-z') setTimeout(animSysDiag, 80);
+  if (id === 'page-detail-z') setTimeout(animSysDiag, 80);
 }
 
 function switchTab(el, paneId) {
@@ -1094,11 +1143,10 @@ function switchTab(el, paneId) {
   root.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
   el.classList.add('active');
   document.getElementById(paneId).classList.add('active');
-  if (paneId === 'tab-z-diag') setTimeout(animSysDiag, 80);
 }
 
 function animSysDiag() {
-  const flow = document.getElementById('sysdiag-flow-z');
+  const flow = document.getElementById('sysdiag-flow-det');
   if (!flow) return;
   const items = flow.querySelectorAll('.sysdiag-node, .sysdiag-arr');
   items.forEach(el => el.classList.remove('sd-vis'));
@@ -1271,10 +1319,6 @@ function homeMove() {
   setBadge('IDLE', '#555');
   logMsg('원점 복귀 완료 — Z1: +00000 / Z2: +00000');
 }
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
-<script>
-  mermaid.initialize({ startOnLoad: true, theme: 'default', fontFamily: "'Noto Sans KR', sans-serif" });
 </script>
 </body>
 </html>
