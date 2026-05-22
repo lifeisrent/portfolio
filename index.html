@@ -234,6 +234,21 @@ body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:#111;font-size:
   font-size:12px;font-weight:700;border-radius:3px;
 }
 
+/* ── Detail Z축 — 좌측 이미지 (데스크톱 전용) ── */
+.detail-z-img{
+  width:100%;object-fit:contain;border-radius:8px;
+  margin-top:auto;opacity:.92;max-height:220px;
+}
+/* ── Detail Z축 — 돌아가기 버튼 풀너비 + 파란 테두리 (데스크톱 전용) ── */
+.d-back-btn-z{
+  width:100% !important;
+  border-color:#1565C0 !important;
+  color:#1565C0 !important;
+  justify-content:center;
+  font-size:17px !important;
+}
+.d-back-btn-z:hover{ background:#EBF5FF !important; }
+
 /* ── Detail page 1 (Z축) — 왼쪽 패널 40% / 글씨 +7pt ── */
 #page-detail-z .detail-left {
   width: 40% !important;
@@ -359,6 +374,14 @@ body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:#111;font-size:
   .pop-title { font-size:15px !important; margin-bottom:14px !important; }
 
   /* ─ Detail page 1 (Z축) 모바일 — 글씨 +4pt, 왼쪽 패널 full-width 복구 ─ */
+  .detail-z-img { display:none !important; }
+  .d-back-btn-z {
+    width:fit-content !important;
+    border-color:#888 !important;
+    color:#555 !important;
+    font-size:14px !important;
+    justify-content:flex-start !important;
+  }
   #page-detail-z .detail-left {
     width: 100% !important;
     flex: none !important;
@@ -501,10 +524,11 @@ body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:#111;font-size:
       <div class="d-label">기간</div>
       <div class="d-period">4개월<br>2023.06 ~ 2023.10</div>
     </div>
+    <img class="detail-z-img" src="images/z_motion.png" alt="Z-MOTION 구조">
   </div>
   <div class="v-div"></div>
   <div class="detail-right">
-    <div class="d-back-btn" onclick="showPage('page-main')">← 메인으로 돌아가기</div>
+    <div class="d-back-btn d-back-btn-z" onclick="showPage('page-main')">← 메인으로 돌아가기</div>
     <div class="d-nav-row" style="flex:1;" onclick="showPage('page-diag-z')">
       <div class="d-nav-title">📐 구성도</div>
       <div class="d-nav-desc">시스템 구성 및 동작 흐름도를 확인합니다.</div>
@@ -536,49 +560,64 @@ body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:#111;font-size:
 
   <!-- TAB: 구성도 -->
   <div id="tab-z-diag" class="tab-pane active">
-    <div class="diag-wrap">
-      <div class="diag-spec">스펙 요약 : 모션 컨트롤러 1대, <b>서보 드라이버 2대</b>, <b>엔코더 서보 2개</b></div>
-      <div class="diag-title">구성도</div>
-      <div class="diag-row">
-        <div class="diag-node" style="background:#EBF5FF;min-width:130px;">모션 컨트롤러<br>양산품</div>
-        <span class="arr">→</span>
-        <div class="diag-node">서보 드라이버1<br>MEL서보</div>
-        <span class="arr">→</span>
-        <div class="diag-node">엔코더 모터1<br>AC 서보</div>
-        <span class="arr">→</span>
-        <div class="diag-node">웨이퍼 스테이지<br>1번 축</div>
+    <div style="display:flex;flex-direction:column;gap:28px;">
+
+      <!-- 하드웨어 구성도 -->
+      <div class="diag-wrap">
+        <div class="diag-title">하드웨어 구성도</div>
+        <pre class="mermaid">
+flowchart TD
+PC["PC 입력 테스트 프로그램"]
+Controller["모션 컨트롤러 양산품"]
+Driver1["서보 드라이버1<br/>(MEL서보)"]
+Motor1["엔코더 모터1<br/>(AC 서보)"]
+Stage1["웨이퍼 스테이지<br/>1번 축"]
+Driver2["서보 드라이버2<br/>(MEL서보)"]
+Motor2["엔코더 모터2<br/>(AC 서보)"]
+Stage2["웨이퍼 스테이지<br/>2번 축"]
+
+PC -->|"이더넷 통신"| Controller
+
+Controller --> Driver1
+Driver1 --> Motor1
+Motor1 --> Stage1
+
+Controller --> Driver2
+Driver2 --> Motor2
+Motor2 --> Stage2
+
+classDef pc fill:#ffffff,stroke:#111111,stroke-width:2px,color:#111111;
+classDef controller fill:#e8f3ff,stroke:#111111,stroke-width:2px,color:#111111;
+classDef driver fill:#eef8e8,stroke:#111111,stroke-width:2px,color:#111111;
+classDef motor fill:#fff4d8,stroke:#111111,stroke-width:2px,color:#111111;
+classDef stage fill:#f4e9ff,stroke:#111111,stroke-width:2px,color:#111111;
+
+class PC pc;
+class Controller controller;
+class Driver1,Driver2 driver;
+class Motor1,Motor2 motor;
+class Stage1,Stage2 stage;
+        </pre>
       </div>
-      <div style="display:flex;margin-bottom:4px;">
-        <div style="width:65px;flex-shrink:0;"></div>
-        <span style="color:#1565C0;font-size:20px;margin-left:44px;">↓</span>
+
+      <!-- 소프트웨어 구성도 -->
+      <div class="diag-wrap">
+        <div class="diag-title">소프트웨어 구성도</div>
+        <pre class="mermaid">
+flowchart TD
+A["미쓰비시 서보 시스템 (하드웨어)"]
+B["미쓰비시 제어 소프트웨어"]
+C["자체 개발 통신 인터페이스 / 프로토콜 모듈"]
+D["자체 개발 컨트롤러"]
+E["PC 프로그램 연동"]
+
+A --> B --> C --> D --> E
+
+classDef box fill:#f0f6ff,stroke:#1565C0,stroke-width:2px,color:#111111;
+class A,B,C,D,E box;
+        </pre>
       </div>
-      <div class="diag-row">
-        <div class="diag-node" style="min-width:130px;background:#fff0f0;">이더넷</div>
-        <span class="arr" style="color:transparent;">→</span>
-        <div class="diag-node">서보 드라이버2<br>MEL서보</div>
-        <span class="arr">→</span>
-        <div class="diag-node">엔코더 모터2<br>AC 서보</div>
-        <span class="arr">→</span>
-        <div class="diag-node">웨이퍼 스테이지<br>2번 축</div>
-      </div>
-      <div style="color:#1565C0;font-size:20px;margin-left:44px;margin-bottom:4px;">↑</div>
-      <div class="diag-row">
-        <div class="diag-node" style="min-width:130px;background:#f5f5f5;">PC 입력<br>테스트 프로그램</div>
-      </div>
-      <div class="diag-photos">
-        <div class="diag-photo">
-          <img src="images/z_servo_driver.png" alt="서보드라이버">
-          <span>서보 드라이버 (MEL서보)</span>
-        </div>
-        <div class="diag-photo">
-          <img src="images/z_encoder_motor.png" alt="엔코더모터">
-          <span>엔코더 모터 (AC 서보)</span>
-        </div>
-        <div class="diag-photo">
-          <img src="images/z_motion.png" alt="Z-MOTION">
-          <span>2중 모션 (Z축)</span>
-        </div>
-      </div>
+
     </div>
   </div>
 
@@ -684,7 +723,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:#111;font-size:
   <div class="prog-inner" style="flex:1;display:flex;overflow:hidden;min-height:0;">
 
     <!-- ── LEFT: 2D Animation ── -->
-    <div class="anim-panel" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 24px;background:#f0f4ff;gap:14px;">
+    <div class="anim-panel" style="flex:0 0 40%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 24px;background:#f0f4ff;gap:14px;">
 
       <div style="font-size:15px;font-weight:700;color:#1565C0;letter-spacing:1px;">웨이퍼 Z축 스테이지 시뮬레이션</div>
 
@@ -788,7 +827,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:#111;font-size:
     <div class="prog-v-div" style="width:3px;background:#1565C0;flex-shrink:0;"></div>
 
     <!-- ── RIGHT: MFC Control Panel (compact) ── -->
-    <div class="ctrl-panel" style="width:300px;flex-shrink:0;display:flex;flex-direction:column;background:#c0c0c0;overflow:hidden;">
+    <div class="ctrl-panel" style="flex:0 0 60%;display:flex;flex-direction:column;background:#c0c0c0;overflow:hidden;">
       <div class="mfc-titlebar" style="font-size:13px;padding:6px 12px;">🖥️ Z축 제어 패널</div>
       <div style="flex:1;display:flex;flex-direction:column;padding:10px;gap:10px;overflow:hidden;">
 
@@ -1150,6 +1189,10 @@ function homeMove() {
   setBadge('IDLE', '#555');
   logMsg('원점 복귀 완료 — Z1: +00000 / Z2: +00000');
 }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'default', fontFamily: "'Noto Sans KR', sans-serif" });
 </script>
 </body>
 </html>
