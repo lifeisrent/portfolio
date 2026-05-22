@@ -124,6 +124,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:#111;font-size:
 /* 세로 플로우 (소프트웨어) */
 .hdiag-vflow{display:flex;flex-direction:column;align-items:flex-start;gap:0;}
 .hdiag-vnode{padding:9px 18px;border-radius:8px;font-size:13px;font-weight:600;color:#111;border:1.5px solid #90bce8;background:#f0f6ff;min-width:260px;text-align:left;}
+.hdiag-vnode.c-yellow{background:#fff9d6;border-color:#d4b96a;}
 .hdiag-varrow{color:#0057b8;font-size:18px;padding-left:20px;line-height:1.2;}
 @media(max-width:768px){
   .sysdiag-flow{flex-direction:column;}
@@ -727,13 +728,13 @@ body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:#111;font-size:
         <div class="hdiag-vflow">
           <div class="hdiag-vnode">미쓰비시 서보 시스템 (하드웨어)</div>
           <div class="hdiag-varrow">↓</div>
-          <div class="hdiag-vnode">미쓰비시 제어 소프트웨어</div>
+          <div class="hdiag-vnode c-yellow">미쓰비시 제어 소프트웨어</div>
           <div class="hdiag-varrow">↓</div>
           <div class="hdiag-vnode">자체 개발 통신 인터페이스 / 프로토콜 모듈</div>
           <div class="hdiag-varrow">↓</div>
           <div class="hdiag-vnode">자체 개발 컨트롤러</div>
           <div class="hdiag-varrow">↓</div>
-          <div class="hdiag-vnode">PC 프로그램 연동</div>
+          <div class="hdiag-vnode c-yellow">PC 프로그램 연동</div>
         </div>
       </div>
 
