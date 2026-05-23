@@ -58,6 +58,7 @@ function initializePortfolioPage() {
   renderFlowModal();
 
   // 2) Attach all events after rendering
+  initializeProfileCardToggle();
   initializeProjectNavigation();
   initializeTabs();
   initializeFlowModal();
@@ -107,6 +108,32 @@ function renderProfilePanel() {
       const cardBodyText = card.lines.join(' ');
 
       if (card.inline) {
+        if (card.expandable) {
+          const detailMarkup = (card.details || [])
+            .map((detailText) => `<div>${detailText}</div>`)
+            .join('');
+
+          return `
+            <div
+              class="p-card is-collapsible"
+              data-collapsible-card="true"
+              role="button"
+              tabindex="0"
+              aria-expanded="false"
+            >
+              <div class="p-card-head p-card-inline">
+                ${card.iconSvg}
+                <span>${card.title}</span>
+                <span class="p-card-inline-body">${cardBodyText}</span>
+                <span class="p-card-toggle-icon" data-collapsible-icon="true">＋</span>
+              </div>
+              <div class="p-card-detail" data-collapsible-detail="true" hidden>
+                ${detailMarkup}
+              </div>
+            </div>
+          `;
+        }
+
         return `
           <div class="p-card">
             <div class="p-card-head p-card-inline">
@@ -144,6 +171,43 @@ function renderProfilePanel() {
       ${profileCardsMarkup}
     </div>
   `;
+}
+
+function initializeProfileCardToggle() {
+  const collapsibleCardElements = document.querySelectorAll('[data-collapsible-card="true"]');
+
+  collapsibleCardElements.forEach((collapsibleCardElement) => {
+    collapsibleCardElement.addEventListener('click', () => {
+      toggleProfileCard(collapsibleCardElement);
+    });
+
+    collapsibleCardElement.addEventListener('keydown', (keyboardEvent) => {
+      if (keyboardEvent.key === 'Enter' || keyboardEvent.key === ' ') {
+        keyboardEvent.preventDefault();
+        toggleProfileCard(collapsibleCardElement);
+      }
+    });
+  });
+}
+
+function toggleProfileCard(collapsibleCardElement) {
+  const detailElement = collapsibleCardElement.querySelector('[data-collapsible-detail="true"]');
+  const iconElement = collapsibleCardElement.querySelector('[data-collapsible-icon="true"]');
+
+  if (!detailElement) {
+    return;
+  }
+
+  const isExpanded = collapsibleCardElement.getAttribute('aria-expanded') === 'true';
+  const nextExpandedState = !isExpanded;
+
+  collapsibleCardElement.setAttribute('aria-expanded', String(nextExpandedState));
+  collapsibleCardElement.classList.toggle('is-expanded', nextExpandedState);
+  detailElement.hidden = !nextExpandedState;
+
+  if (iconElement) {
+    iconElement.textContent = nextExpandedState ? '－' : '＋';
+  }
 }
 
 function renderProjectList() {
