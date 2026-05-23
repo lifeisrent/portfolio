@@ -23,54 +23,6 @@ body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:#111;font-size:
 ══════════════════════════════════════════════ */
 #page-main{flex-direction:row;}
 
-/* ─── SINGLE SCROLL MODE ─── */
-body.single-scroll-mode #page-main{display:flex !important;}
-body.single-scroll-mode .profile-panel{
-  position:sticky;
-  top:0;
-  height:100vh;
-}
-body.single-scroll-mode .projects-panel{
-  height:100vh;
-  overflow-y:auto;
-  padding-bottom:120px;
-}
-body.single-scroll-mode .single-section{
-  border:2px solid #1565C0;
-  border-radius:10px;
-  background:#fff;
-  margin-bottom:18px;
-  overflow:hidden;
-}
-body.single-scroll-mode .single-section-title{
-  font-size:19px;
-  font-weight:900;
-  color:#1565C0;
-  padding:16px 18px;
-  border-bottom:2px solid #d8e9fb;
-  background:#f5faff;
-}
-body.single-scroll-mode .single-section > .detail-page,
-body.single-scroll-mode .single-section > .subpage,
-body.single-scroll-mode .single-section > .page{
-  width:100%;
-  height:auto;
-}
-body.single-scroll-mode .single-section .detail-left,
-body.single-scroll-mode .single-section .detail-right{
-  width:100% !important;
-  flex:none !important;
-  padding:22px;
-}
-body.single-scroll-mode .single-section .v-div{display:none !important;}
-body.single-scroll-mode .single-section .d-back-btn,
-body.single-scroll-mode .single-section .sp-back{display:none !important;}
-body.single-scroll-mode .single-section .tab-pane{
-  display:flex;
-  flex:unset;
-}
-body.single-scroll-mode .single-section .tabs{display:none;}
-
 /* LEFT PROFILE */
 .profile-panel{
   width:340px;flex-shrink:0;padding:28px 22px;
@@ -1958,59 +1910,6 @@ body.single-scroll-mode .single-section .tabs{display:none;}
      JAVASCRIPT
 ████████████████████████████████████████████ -->
 <script>
-function removeShowPageOnclick(root) {
-  if (!root) return;
-  root.querySelectorAll('[onclick]').forEach(el => {
-    const code = el.getAttribute('onclick') || '';
-    if (code.includes('showPage(')) el.removeAttribute('onclick');
-  });
-}
-
-function appendSingleSection(panel, title, node) {
-  if (!panel || !node) return;
-  node.classList.remove('page', 'active');
-  const sec = document.createElement('section');
-  sec.className = 'single-section';
-  const h = document.createElement('div');
-  h.className = 'single-section-title';
-  h.textContent = title;
-  sec.appendChild(h);
-  sec.appendChild(node);
-  panel.appendChild(sec);
-}
-
-function activateSingleScrollMode() {
-  const main = document.getElementById('page-main');
-  if (!main) return;
-  const panel = main.querySelector('.projects-panel');
-  if (!panel || panel.dataset.singleScrollBuilt === '1') return;
-
-  document.body.classList.add('single-scroll-mode');
-  panel.dataset.singleScrollBuilt = '1';
-
-  removeShowPageOnclick(panel);
-
-  const detailZ = document.getElementById('page-detail-z');
-  const diagZ = document.getElementById('page-diag-z');
-  const progZ = document.getElementById('page-prog-z');
-  const detailRobot = document.getElementById('page-detail-robot');
-  const diagRobot = document.getElementById('page-diag-robot');
-  const progRobot = document.getElementById('page-prog-robot');
-
-  if (detailZ) {
-    const leftBlock = detailZ.querySelector('.detail-left');
-    if (leftBlock) appendSingleSection(panel, 'PROJECT 01 상세 · 개요', leftBlock);
-  }
-  if (diagZ) appendSingleSection(panel, 'PROJECT 01 상세 · 시스템 구성도', diagZ);
-  if (progZ) appendSingleSection(panel, 'PROJECT 01 상세 · 프로그램', progZ);
-
-  appendSingleSection(panel, 'PROJECT 02 상세', detailRobot);
-  appendSingleSection(panel, 'PROJECT 02 상세 · 시스템 구성도', diagRobot);
-  appendSingleSection(panel, 'PROJECT 02 상세 · 프로그램', progRobot);
-
-  [detailZ, diagZ, progZ, detailRobot, diagRobot, progRobot].forEach(removeShowPageOnclick);
-}
-
 function showPage(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -2369,7 +2268,6 @@ function renderFeature1CurrentPosition() {
 }
 
 window.addEventListener('load', function () {
-  activateSingleScrollMode();
   renderFeature1CurrentPosition();
 });
 </script>
