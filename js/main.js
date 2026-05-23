@@ -104,6 +104,20 @@ function renderProfilePanel() {
         `;
       }
 
+      const cardBodyText = card.lines.join(' ');
+
+      if (card.inline) {
+        return `
+          <div class="p-card">
+            <div class="p-card-head p-card-inline">
+              ${card.iconSvg}
+              <span>${card.title}</span>
+              <span class="p-card-inline-body">${cardBodyText}</span>
+            </div>
+          </div>
+        `;
+      }
+
       const cardBodyMarkup = card.lines.map((lineText) => `${lineText}`).join('<br>');
 
       return `
