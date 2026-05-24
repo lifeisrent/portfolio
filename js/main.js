@@ -113,6 +113,10 @@ function renderProfilePanel() {
 
       const cardBodyText = card.lines.join(' ');
       const cardBodyMarkup = card.lines.map((lineText) => `${lineText}`).join('<br>');
+      const hasCardBody = cardBodyMarkup.trim().length > 0;
+      const cardInlineHeadMarkup = card.inlineHeadText
+        ? `<span class="p-card-inline-body">${card.inlineHeadText}</span>`
+        : '';
 
       if (card.expandable && !card.inline) {
         const detailMarkup = (card.details || [])
@@ -131,9 +135,10 @@ function renderProfilePanel() {
               <div class="p-card-head">
                 ${card.iconSvg}
                 <span>${card.title}</span>
+                ${cardInlineHeadMarkup}
                 <span class="p-card-toggle-icon" data-collapsible-icon="true">＋</span>
               </div>
-              <div class="p-card-body">${cardBodyMarkup}</div>
+              ${hasCardBody ? `<div class="p-card-body">${cardBodyMarkup}</div>` : ''}
               <div class="p-card-detail" data-collapsible-detail="true" hidden>
                 ${detailMarkup}
               </div>
@@ -146,12 +151,11 @@ function renderProfilePanel() {
             <div class="p-card-head">
               ${card.iconSvg}
               ${card.title}
+              ${cardInlineHeadMarkup}
             </div>
-            <div class="p-card-body">
-              ${cardBodyMarkup}
-              <div class="p-card-detail">
-                ${detailMarkup}
-              </div>
+            ${hasCardBody ? `<div class="p-card-body">${cardBodyMarkup}</div>` : ''}
+            <div class="p-card-detail">
+              ${detailMarkup}
             </div>
           </div>
         `;
@@ -200,8 +204,9 @@ function renderProfilePanel() {
           <div class="p-card-head">
             ${card.iconSvg}
             ${card.title}
+            ${cardInlineHeadMarkup}
           </div>
-          <div class="p-card-body">${cardBodyMarkup}</div>
+          ${hasCardBody ? `<div class="p-card-body">${cardBodyMarkup}</div>` : ''}
         </div>
       `;
     })
