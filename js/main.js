@@ -211,7 +211,7 @@ function renderProfilePanel() {
     <div class="profile-top">
       <img class="profile-photo" src="${profileData.photo}" alt="프로필 사진">
       <div class="profile-mobile-title">IT 개발자 포트폴리오</div>
-      <div class="profile-info">
+      <div class="profile-info p-card profile-info-card">
         <div class="profile-name">${profileData.name}</div>
         <div class="profile-meta">${profileData.meta}</div>
       </div>
