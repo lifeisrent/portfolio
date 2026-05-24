@@ -321,6 +321,22 @@ body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:#111;font-size:
 .prog-v-div{width:3px;background:#1565C0;flex-shrink:0;}
 .ctrl-panel-inner{flex:0 0 60%;display:flex;flex-direction:column;background:#c0c0c0;overflow:hidden;}
 
+/* Component: Cleanroom Environment */
+.cleanroom-section{padding-top:26px;}
+.cleanroom-section:first-of-type{padding-top:32px;}
+.cleanroom-section-last{padding-bottom:60px;}
+.cleanroom-card{border:1.5px solid #d0e4f7;border-radius:12px;background:#fafcff;padding:18px 20px;display:flex;flex-direction:column;gap:12px;}
+.cleanroom-title{font-size:17px;font-weight:800;color:#1565C0;line-height:1.45;}
+.cleanroom-desc{font-size:15px;color:#333;line-height:1.75;}
+.cleanroom-diagram{display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:14px 16px;border:1.5px solid #d0e4f7;border-radius:10px;background:#fff;}
+.cleanroom-node{padding:8px 14px;border:1.5px solid #1565C0;border-radius:8px;background:#fff;color:#1565C0;font-size:15px;font-weight:700;line-height:1.45;text-align:center;min-width:124px;}
+.cleanroom-arrow{font-size:18px;font-weight:800;color:#1565C0;line-height:1;}
+.cleanroom-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;}
+.cleanroom-feature-card{border:1.5px solid #d0e4f7;border-radius:10px;background:#fff;padding:14px 16px;display:flex;align-items:center;min-height:72px;}
+.cleanroom-feature-title{font-size:15px;font-weight:700;color:#333;line-height:1.6;}
+.cleanroom-feature-list{margin:0;padding-left:22px;font-size:15px;color:#333;line-height:1.75;}
+.cleanroom-feature-list li + li{margin-top:8px;}
+
 /* Component: Section Divider */
 .rs-divider{height:3px;background:#e8f0fe;margin:0;}
 
@@ -401,6 +417,10 @@ body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:#111;font-size:
   .diag-photo img{max-height:180px !important;max-width:48vw !important;}
   .tabs{overflow-x:auto;}
   .tab{padding:10px 14px !important;font-size:14px !important;white-space:nowrap;}
+  .cleanroom-grid{grid-template-columns:1fr !important;}
+  .cleanroom-card{padding:16px !important;}
+  .cleanroom-diagram{padding:12px !important;}
+  .cleanroom-node{min-width:100px !important;font-size:14px !important;}
   #flowModalOverlay svg{display:none !important;}
   .flow-vlist{display:flex !important;}
   .sysdiag-flow{flex-direction:column;}

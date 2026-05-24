@@ -172,5 +172,64 @@ const projectList = [
         ]
       }
     }
+  },
+  {
+    id: 'cleanroom-environment-solution',
+    layoutType: 'cleanroomEnvironment',
+    number: 'PROJECT 03',
+    title: '클린룸 환경 솔루션',
+    period: '기간 미정',
+    anchorId: 'project-cleanroom-environment',
+    bannerSubtitle: '클린룸 환경 솔루션',
+    tags: ['Gateway 서버', '장비 모니터링', '센서 인터페이스', 'PLC 통신', '데이터 수집'],
+    summary: [
+      'PC 내부에서만 가능했던 설비 상태 확인 및 제어를 외부 기기에서도 확인 가능하도록 구성',
+      'Gateway 서버를 통해 노트북, 핸드폰에서 장비 상태 확인 및 알람 수신 가능',
+      '센서, 모터, PLC, 산업용 프로토콜, 비전 검사, 데이터 수집 기능 연동'
+    ],
+    detail: {
+      projectName: '클린룸 환경 솔루션',
+      informationRows: [
+        {
+          iconClass: 'bi bi-exclamation-circle-fill',
+          label: '문제 상황',
+          lines: [
+            '기존 설비 환경에서는 모터 및 센서가 연결된 제어 PC 내부에서만 상태 확인 및 제어가 가능'
+          ]
+        },
+        {
+          iconClass: 'bi bi-diagram-3-fill',
+          label: '해결 방식',
+          lines: ['Gateway 서버를 통해 노트북, 핸드폰에서 장비 상태 확인 및 알람 수신 가능']
+        },
+        {
+          iconClass: 'bi bi-gear-wide-connected',
+          label: '구현 내용',
+          lines: ['센서, 모터, PLC, 산업용 프로토콜, 비전 검사, 데이터 수집 기능 연동']
+        }
+      ]
+    },
+    cleanroomEnvironmentContent: {
+      problemLines: [
+        '기존 설비 환경에서는 모터 및 센서가 연결된 제어 PC 내부에서만 상태 확인 및 제어가 가능',
+        'PC - 유선연결 - 모터/센서'
+      ],
+      solutionSteps: [
+        'PC 내부에서만 가능했던 설비 상태 확인 및 제어를 외부 기기에서도 확인 가능하도록 구성',
+        'Gateway 서버를 통해 노트북, 핸드폰에서 장비 상태 확인 및 알람 수신 가능',
+        '센서, 모터, PLC, 산업용 프로토콜, 비전 검사, 데이터 수집 기능 연동'
+      ],
+      implementationItems: [
+        'PC-핸드폰 연동',
+        'SNS로 리포트 수신',
+        '모션 제어',
+        '센서 인터페이스',
+        'PLC 통신',
+        '산업용 프로토콜',
+        '비전 검사',
+        '데이터 수집',
+        '장비 자동화'
+      ]
+    }
   }
 ];

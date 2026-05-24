@@ -450,6 +450,14 @@ function renderProjectLayout(project) {
     `;
   }
 
+  if (project.layoutType === 'cleanroomEnvironment') {
+    return `
+      ${renderProjectBanner(project)}
+      <div class="rs-block">${projectDetailCardMarkup}</div>
+      ${renderCleanroomEnvironmentSection(project)}
+    `;
+  }
+
   return `
     ${renderProjectBanner(project)}
     <div class="rs-block">${projectDetailCardMarkup}</div>
@@ -1022,6 +1030,70 @@ function renderAutonomousDrivingSection(project) {
           <div style="font-size:22px;font-weight:700;color:#1565C0;">준비 중입니다</div>
           <div style="font-size:16px;margin-top:8px;">프로그램 화면이 곧 추가됩니다.</div>
         </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderCleanroomEnvironmentSection(project) {
+  const cleanroomContent = project.cleanroomEnvironmentContent || {};
+  const problemLines = cleanroomContent.problemLines || [];
+  const solutionSteps = cleanroomContent.solutionSteps || [];
+  const implementationItems = cleanroomContent.implementationItems || [];
+
+  const problemDescription = problemLines[0] || '';
+  const problemFlowText = problemLines[1] || '';
+
+  const solutionStepsMarkup = solutionSteps
+    .map((step) => `<li>${step}</li>`)
+    .join('');
+
+  const implementationCardsMarkup = implementationItems
+    .map(
+      (item) => `
+        <article class="cleanroom-feature-card">
+          <h4 class="cleanroom-feature-title">${item}</h4>
+        </article>
+      `
+    )
+    .join('');
+
+  return `
+    <div class="rs-block cleanroom-section">
+      <div class="rs-section-title">📌 문제 상황</div>
+      <div class="cleanroom-card">
+        <h3 class="cleanroom-title">문제 상황</h3>
+        <p class="cleanroom-desc">${problemDescription}</p>
+        <div class="cleanroom-diagram">
+          <div class="cleanroom-node">PC</div>
+          <div class="cleanroom-arrow">- 유선연결 -</div>
+          <div class="cleanroom-node">모터/센서</div>
+        </div>
+        <p class="cleanroom-desc">${problemFlowText}</p>
+      </div>
+    </div>
+
+    <div class="rs-block cleanroom-section">
+      <div class="rs-section-title">🔧 해결 방식</div>
+      <div class="cleanroom-card">
+        <h3 class="cleanroom-title">Gateway 서버 중심 구조</h3>
+        <ol class="cleanroom-feature-list">
+          ${solutionStepsMarkup}
+        </ol>
+        <div class="cleanroom-diagram">
+          <div class="cleanroom-node">PC</div>
+          <div class="cleanroom-arrow">→</div>
+          <div class="cleanroom-node">Gateway 서버</div>
+          <div class="cleanroom-arrow">→</div>
+          <div class="cleanroom-node">외부 노트북/핸드폰</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rs-block cleanroom-section cleanroom-section-last">
+      <div class="rs-section-title">⚙ 구현 내용</div>
+      <div class="cleanroom-grid">
+        ${implementationCardsMarkup}
       </div>
     </div>
   `;
