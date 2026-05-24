@@ -322,8 +322,8 @@ body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:#111;font-size:
   #layout{flex-direction:column;height:auto;overflow:visible;}
   .right-scroll{height:auto;overflow-y:visible;}
   .profile-panel{width:100% !important;padding:0 0 16px !important;gap:14px !important;border-bottom:none;}
-  .profile-top{flex-direction:row !important;align-items:center !important;justify-content:flex-start !important;gap:12px !important;padding:0 12px !important;}
-  .profile-info{flex:1 !important;align-items:flex-start !important;text-align:left !important;}
+  .profile-top{flex-direction:row !important;align-items:center !important;justify-content:flex-start !important;gap:12px !important;padding:0 !important;}
+  .profile-info{flex:1 !important;align-items:flex-start !important;text-align:left !important;padding-left:0 !important;}
   .profile-photo{width:42% !important;max-width:220px !important;height:auto !important;flex-shrink:0;}
   .profile-name{font-size:22px !important;}
   .profile-meta{font-size:14px !important;}
