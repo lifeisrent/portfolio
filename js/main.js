@@ -95,16 +95,23 @@ function renderProfilePanel() {
             </div>
             <div class="p-card-body">
               ${card.skillGroups
-                .map(
-                  (skillGroup, index) => `
+                .map((skillGroup, index) => {
+                  const hasProgress = typeof skillGroup.progress === 'number';
+                  const badgeMarkup = (skillGroup.badges || [])
+                    .map((badgeText) => `<span class="badge">${badgeText}</span>`)
+                    .join('');
+
+                  return `
                     <div class="skill-row" style="${index === 0 ? 'align-items:center;' : 'margin-top:6px;align-items:center;'}">
                       <span style="font-size:15px;font-weight:700;color:#555;white-space:nowrap;margin-right:2px;">${skillGroup.label} :</span>
-                      ${skillGroup.badges
-                        .map((badgeText) => `<span class="badge">${badgeText}</span>`)
-                        .join('')}
+                      ${hasProgress ? `
+                        <div class="skill-progress-bar" aria-label="${skillGroup.label} 숙련도">
+                          <div class="skill-progress-fill" style="width:${skillGroup.progress}%;"></div>
+                        </div>
+                      ` : badgeMarkup}
                     </div>
-                  `
-                )
+                  `;
+                })
                 .join('')}
             </div>
           </div>

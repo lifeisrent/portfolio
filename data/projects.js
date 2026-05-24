@@ -37,6 +37,10 @@ const profileData = {
       iconSvg: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg>',
       skillGroups: [
         {
+          label: 'AI',
+          progress: 80
+        },
+        {
           label: '장비제어',
           badges: ['드라이버 개발', '제어 프로그램 연동']
         },
