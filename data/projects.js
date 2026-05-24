@@ -64,7 +64,7 @@ const projectList = [
   {
     id: 'motion-control',
     layoutType: 'motionControl',
-    number: 'PROJECT 01',
+    number: 'PROJECT 03',
     title: '모션 제어',
     period: '2023.06 ~ 2023.10',
     anchorId: 'project-motion-control',
@@ -176,7 +176,7 @@ const projectList = [
   {
     id: 'cleanroom-environment-solution',
     layoutType: 'cleanroomEnvironment',
-    number: 'PROJECT 03',
+    number: 'PROJECT 01',
     title: '클린룸 환경 솔루션',
     period: '기간 미정',
     anchorId: 'project-cleanroom-environment',

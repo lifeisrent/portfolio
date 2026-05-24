@@ -385,6 +385,36 @@ function toggleProfileCard(collapsibleCardElement) {
   }
 }
 
+function getOrderedProjects() {
+  const preferredProjectOrder = [
+    'cleanroom-environment-solution',
+    'autonomous-driving',
+    'motion-control'
+  ];
+  const orderIndexById = new Map(
+    preferredProjectOrder.map((projectId, projectIndex) => [projectId, projectIndex])
+  );
+
+  return [...projectList].sort((leftProject, rightProject) => {
+    const leftOrderIndex = orderIndexById.has(leftProject.id)
+      ? orderIndexById.get(leftProject.id)
+      : preferredProjectOrder.length;
+    const rightOrderIndex = orderIndexById.has(rightProject.id)
+      ? orderIndexById.get(rightProject.id)
+      : preferredProjectOrder.length;
+
+    if (leftOrderIndex === rightOrderIndex) {
+      return 0;
+    }
+
+    return leftOrderIndex - rightOrderIndex;
+  });
+}
+
+function getDisplayProjectNumber(projectIndex) {
+  return `PROJECT ${String(projectIndex + 1).padStart(2, '0')}`;
+}
+
 function renderProjectList() {
   const projectListElement = document.querySelector(PROJECT_LIST_SELECTOR);
 
@@ -392,11 +422,13 @@ function renderProjectList() {
     return;
   }
 
-  const projectRowMarkup = projectList
+  const orderedProjectList = getOrderedProjects();
+
+  const projectRowMarkup = orderedProjectList
     .map(
-      (project) => `
+      (project, projectIndex) => `
         <div class="proj-row" data-scroll-target="${project.anchorId}" role="button" tabindex="0">
-          <div class="proj-row-num">${project.number}</div>
+          <div class="proj-row-num">${getDisplayProjectNumber(projectIndex)}</div>
           <div class="proj-row-title">${project.title}</div>
           <div class="proj-row-desc">
             <ul>
@@ -411,7 +443,7 @@ function renderProjectList() {
     )
     .join('');
 
-  const nextProjectNumber = String(projectList.length + 1).padStart(2, '0');
+  const nextProjectNumber = String(orderedProjectList.length + 1).padStart(2, '0');
 
   projectListElement.innerHTML = `
     ${projectRowMarkup}
@@ -426,8 +458,15 @@ function renderProjectDetail() {
     return;
   }
 
-  projectDetailElement.innerHTML = projectList
-    .map((project) => renderProjectLayout(project))
+  const orderedProjectList = getOrderedProjects();
+
+  projectDetailElement.innerHTML = orderedProjectList
+    .map((project, projectIndex) =>
+      renderProjectLayout({
+        ...project,
+        number: getDisplayProjectNumber(projectIndex)
+      })
+    )
     .join('');
 }
 
