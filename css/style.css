@@ -322,9 +322,9 @@ body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:#111;font-size:
   #layout{flex-direction:column;height:auto;overflow:visible;}
   .right-scroll{height:auto;overflow-y:visible;}
   .profile-panel{width:100% !important;padding:0 0 16px !important;gap:14px !important;border-bottom:none;}
-  .profile-top{flex-direction:column !important;align-items:center !important;gap:12px !important;}
+  .profile-top{flex-direction:column !important;align-items:flex-start !important;gap:12px !important;padding-left:12px !important;}
   .profile-info{align-items:flex-start !important;text-align:left !important;}
-  .profile-photo{width:25% !important;height:auto !important;flex-shrink:0;}
+  .profile-photo{width:45% !important;max-width:220px !important;height:auto !important;flex-shrink:0;}
   .profile-name{font-size:22px !important;}
   .profile-meta{font-size:14px !important;}
   .profile-cards{flex-direction:row !important;flex-wrap:wrap !important;gap:10px !important;padding-left:12px !important;}
@@ -347,6 +347,9 @@ body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:#111;font-size:
   .mel-analysis-header{flex-direction:column;align-items:flex-start;}
   .diag-row{overflow-x:auto;flex-wrap:nowrap !important;padding-bottom:4px;}
   .diag-node{font-size:12px !important;min-width:74px !important;padding:7px 8px !important;}
+  .diag-photos{justify-content:flex-start !important;align-items:flex-start !important;gap:14px !important;}
+  .diag-photo{align-items:flex-start !important;}
+  .diag-photo img{max-height:180px !important;max-width:48vw !important;}
   .tabs{overflow-x:auto;}
   .tab{padding:10px 14px !important;font-size:14px !important;white-space:nowrap;}
   #flowModalOverlay svg{display:none !important;}
