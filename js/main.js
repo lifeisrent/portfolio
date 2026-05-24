@@ -126,8 +126,10 @@ function renderProfilePanel() {
         : '';
 
       if (card.expandable && !card.inline) {
+        const isCareerCard = card.title === '경력';
+        const detailClassName = isCareerCard ? ' career-detail' : '';
         const detailMarkup = (card.details || [])
-          .map((detailText) => `<div>${detailText}</div>`)
+          .map((detailText) => `<div class="p-card-detail-item">${detailText}</div>`)
           .join('');
 
         if (isMobileProfileCardView) {
@@ -146,7 +148,7 @@ function renderProfilePanel() {
                 <span class="p-card-toggle-icon" data-collapsible-icon="true">＋</span>
               </div>
               ${hasCardBody ? `<div class="p-card-body">${cardBodyMarkup}</div>` : ''}
-              <div class="p-card-detail" data-collapsible-detail="true" hidden>
+              <div class="p-card-detail${detailClassName}" data-collapsible-detail="true" hidden>
                 ${detailMarkup}
               </div>
             </div>
@@ -161,7 +163,7 @@ function renderProfilePanel() {
               ${cardInlineHeadMarkup}
             </div>
             ${hasCardBody ? `<div class="p-card-body">${cardBodyMarkup}</div>` : ''}
-            <div class="p-card-detail">
+            <div class="p-card-detail${detailClassName}">
               ${detailMarkup}
             </div>
           </div>
