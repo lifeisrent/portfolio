@@ -64,7 +64,7 @@ const projectList = [
   {
     id: 'motion-control',
     layoutType: 'motionControl',
-    number: 'PROJECT 03',
+    number: 'PROJECT 02',
     title: '모션 제어',
     period: '2023.06 ~ 2023.10',
     anchorId: 'project-motion-control',
@@ -132,7 +132,7 @@ const projectList = [
   {
     id: 'autonomous-driving',
     layoutType: 'autonomousDriving',
-    number: 'PROJECT 02',
+    number: 'PROJECT 03',
     title: '자율주행차 모터 및 센서 연동',
     period: '2023.10 ~ 2024.04',
     anchorId: 'project-autonomous-driving',

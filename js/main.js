@@ -388,8 +388,8 @@ function toggleProfileCard(collapsibleCardElement) {
 function getOrderedProjects() {
   const preferredProjectOrder = [
     'cleanroom-environment-solution',
-    'autonomous-driving',
-    'motion-control'
+    'motion-control',
+    'autonomous-driving'
   ];
   const orderIndexById = new Map(
     preferredProjectOrder.map((projectId, projectIndex) => [projectId, projectIndex])
