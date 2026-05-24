@@ -38,6 +38,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:#111;font-size:
 .p-card-detail{margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.35);font-size:15px;line-height:1.7;color:#fff;}
 .skill-row{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;}
 .profile-top{display:flex;flex-direction:column;align-items:center;gap:10px;width:100%;}
+.profile-mobile-title{display:none;}
 .profile-info{display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;width:100%;background:#000;color:#fff;border-radius:0 0 8px 8px;padding:10px 0 10px 12px;}
 .profile-panel .badge{background:transparent;color:#fff;border-color:#fff;}
 .profile-panel .skill-row span{color:#fff !important;}
@@ -322,8 +323,9 @@ body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:#111;font-size:
   #layout{flex-direction:column;height:auto;overflow:visible;}
   .right-scroll{height:auto;overflow-y:visible;}
   .profile-panel{width:100% !important;padding:0 0 16px !important;gap:14px !important;border-bottom:none;}
-  .profile-top{flex-direction:row !important;align-items:center !important;justify-content:flex-start !important;gap:12px !important;padding:0 !important;}
-  .profile-info{flex:1 !important;align-items:flex-start !important;text-align:left !important;padding-left:0 !important;}
+  .profile-top{flex-direction:row !important;flex-wrap:wrap !important;align-items:center !important;justify-content:flex-start !important;gap:12px !important;padding:0 !important;}
+  .profile-mobile-title{display:block !important;flex:1 !important;font-size:19px !important;font-weight:800 !important;color:#fff !important;line-height:1.35 !important;text-align:left !important;}
+  .profile-info{flex:0 0 100% !important;width:100% !important;align-items:flex-start !important;text-align:left !important;padding-left:0 !important;padding-top:6px !important;}
   .profile-photo{width:42% !important;max-width:220px !important;height:auto !important;flex-shrink:0;}
   .profile-name{font-size:22px !important;}
   .profile-meta{font-size:14px !important;}
