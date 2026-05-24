@@ -1038,6 +1038,7 @@ function renderAutonomousDrivingSection(project) {
 function renderCleanroomEnvironmentSection(project) {
   const cleanroomContent = project.cleanroomEnvironmentContent || {};
   const problemLines = cleanroomContent.problemLines || [];
+  const solutionIntro = cleanroomContent.solutionIntro || '';
   const solutionSteps = cleanroomContent.solutionSteps || [];
   const implementationItems = cleanroomContent.implementationItems || [];
 
@@ -1047,15 +1048,28 @@ function renderCleanroomEnvironmentSection(project) {
   const solutionStepsMarkup = solutionSteps
     .map((step) => `<li>${step}</li>`)
     .join('');
+  const solutionIntroMarkup = solutionIntro ? `<p class="cleanroom-desc">${solutionIntro}</p>` : '';
 
   const implementationCardsMarkup = implementationItems
-    .map(
-      (item) => `
+    .map((item) => {
+      const titleText = item.title || '';
+      const descriptionText = item.description || '';
+      const detailList = item.details || [];
+      const detailListMarkup = detailList.length
+        ? `
+          <ul class="cleanroom-feature-sublist">
+            ${detailList.map((detailText) => `<li>${detailText}</li>`).join('')}
+          </ul>
+        `
+        : '';
+
+      return `
         <article class="cleanroom-feature-card">
-          <h4 class="cleanroom-feature-title">${item}</h4>
+          <h4 class="cleanroom-feature-title">${titleText}${descriptionText ? ` : ${descriptionText}` : ''}</h4>
+          ${detailListMarkup}
         </article>
-      `
-    )
+      `;
+    })
     .join('');
 
   return `
@@ -1076,7 +1090,8 @@ function renderCleanroomEnvironmentSection(project) {
     <div class="rs-block cleanroom-section">
       <div class="rs-section-title">🔧 해결 방식</div>
       <div class="cleanroom-card">
-        <h3 class="cleanroom-title">Gateway 서버 중심 구조</h3>
+        <h3 class="cleanroom-title">해결 방식</h3>
+        ${solutionIntroMarkup}
         <ol class="cleanroom-feature-list">
           ${solutionStepsMarkup}
         </ol>
