@@ -324,6 +324,27 @@ body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:#111;font-size:
 /* Component: Section Divider */
 .rs-divider{height:3px;background:#e8f0fe;margin:0;}
 
+/* Component: Scroll Quick Menu */
+.scroll-quick-menu{
+  position:fixed;right:18px;bottom:84px;
+  display:flex;flex-direction:column;gap:8px;
+  padding:10px 8px;border-radius:14px;
+  background:rgba(70,70,70,0.34);
+  backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
+  box-shadow:0 4px 14px rgba(0,0,0,0.2);
+  z-index:119;
+  opacity:0;transform:translateY(8px);pointer-events:none;
+  transition:opacity .2s,transform .2s;
+}
+.scroll-quick-menu.is-visible{opacity:1;transform:translateY(0);pointer-events:auto;}
+.scroll-quick-menu button{
+  border:none;border-radius:999px;
+  background:rgba(255,255,255,0.2);color:#fff;
+  font-size:12px;font-weight:700;letter-spacing:0.02em;
+  padding:7px 10px;cursor:pointer;
+}
+.scroll-quick-menu button:hover{background:rgba(255,255,255,0.32);}
+
 /* Component: Scroll Top Button */
 .scroll-top-btn{
   position:fixed;right:18px;bottom:22px;
@@ -346,6 +367,8 @@ body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:#111;font-size:
   #layout{flex-direction:column;height:auto;overflow:visible;}
   .right-scroll{height:auto;overflow-y:visible;}
   .profile-panel{width:100% !important;padding:0 0 16px !important;gap:14px !important;border-bottom:none;}
+  .scroll-quick-menu{right:14px !important;bottom:72px !important;padding:8px 7px !important;gap:7px !important;}
+  .scroll-quick-menu button{font-size:11px !important;padding:6px 9px !important;}
   .scroll-top-btn{right:14px !important;bottom:18px !important;width:44px !important;height:44px !important;font-size:20px !important;}
   .profile-top{flex-direction:row !important;flex-wrap:wrap !important;align-items:center !important;justify-content:flex-start !important;gap:12px !important;padding:0 !important;}
   .profile-mobile-title{display:block !important;flex:1 !important;font-size:19px !important;font-weight:800 !important;color:#fff !important;line-height:1.35 !important;text-align:left !important;}

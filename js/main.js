@@ -4,6 +4,7 @@ const PROJECT_DETAIL_SELECTOR = '#project-detail-container';
 const PROFILE_PANEL_SELECTOR = '#profile-panel';
 const FLOW_MODAL_CONTAINER_SELECTOR = '#flow-modal-container';
 const SCROLL_TOP_BUTTON_SELECTOR = '#scroll-top-btn';
+const SCROLL_QUICK_MENU_SELECTOR = '#scroll-quick-menu';
 
 // Simulation configuration values
 const simulationSettings = {
@@ -69,6 +70,7 @@ function initializePortfolioPage() {
   initializeJogControl();
   initializeExcelDownload();
   initializeScrollTopButton();
+  initializeScrollQuickMenu();
 
   renderJogCurrentPosition();
 }
@@ -105,6 +107,68 @@ function initializeScrollTopButton() {
   }
 
   updateScrollTopButtonVisibility();
+}
+
+function initializeScrollQuickMenu() {
+  const quickMenuElement = document.querySelector(SCROLL_QUICK_MENU_SELECTOR);
+  const rightScrollElement = document.querySelector('.right-scroll');
+
+  if (!quickMenuElement) {
+    return;
+  }
+
+  const menuButtonElements = quickMenuElement.querySelectorAll('[data-menu-target]');
+  let showTimerIdentifier = null;
+  let hideTimerIdentifier = null;
+  let lastScrollTimestamp = 0;
+
+  const showQuickMenu = () => {
+    quickMenuElement.classList.add('is-visible');
+  };
+
+  const hideQuickMenu = () => {
+    quickMenuElement.classList.remove('is-visible');
+  };
+
+  const handleScrollActivity = () => {
+    lastScrollTimestamp = Date.now();
+
+    if (!showTimerIdentifier && !quickMenuElement.classList.contains('is-visible')) {
+      showTimerIdentifier = setTimeout(() => {
+        showTimerIdentifier = null;
+
+        if (Date.now() - lastScrollTimestamp <= 220) {
+          showQuickMenu();
+        }
+      }, 500);
+    }
+
+    if (hideTimerIdentifier) {
+      clearTimeout(hideTimerIdentifier);
+    }
+
+    hideTimerIdentifier = setTimeout(() => {
+      hideQuickMenu();
+    }, 1000);
+  };
+
+  menuButtonElements.forEach((menuButtonElement) => {
+    menuButtonElement.addEventListener('click', () => {
+      const targetIdentifier = menuButtonElement.dataset.menuTarget;
+
+      if (!targetIdentifier) {
+        return;
+      }
+
+      scrollToSection(targetIdentifier);
+    });
+  });
+
+  window.addEventListener('scroll', handleScrollActivity, { passive: true });
+
+  if (rightScrollElement) {
+    rightScrollElement.addEventListener('scroll', handleScrollActivity, { passive: true });
+  }
 }
 
 function isMobileViewport() {
@@ -1089,6 +1153,17 @@ function initializeProjectNavigation() {
 }
 
 function scrollToSection(sectionIdentifier) {
+  if (sectionIdentifier === 'profile-panel') {
+    const rightScrollElement = document.querySelector('.right-scroll');
+
+    if (rightScrollElement) {
+      rightScrollElement.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    return;
+  }
+
   const sectionElement = document.getElementById(sectionIdentifier);
 
   if (sectionElement) {
