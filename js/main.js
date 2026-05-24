@@ -3,6 +3,7 @@ const PROJECT_LIST_SELECTOR = '#project-list-container';
 const PROJECT_DETAIL_SELECTOR = '#project-detail-container';
 const PROFILE_PANEL_SELECTOR = '#profile-panel';
 const FLOW_MODAL_CONTAINER_SELECTOR = '#flow-modal-container';
+const SCROLL_TOP_BUTTON_SELECTOR = '#scroll-top-btn';
 
 // Simulation configuration values
 const simulationSettings = {
@@ -67,8 +68,43 @@ function initializePortfolioPage() {
   initializeAutoControl();
   initializeJogControl();
   initializeExcelDownload();
+  initializeScrollTopButton();
 
   renderJogCurrentPosition();
+}
+
+function initializeScrollTopButton() {
+  const scrollTopButtonElement = document.querySelector(SCROLL_TOP_BUTTON_SELECTOR);
+  const rightScrollElement = document.querySelector('.right-scroll');
+
+  if (!scrollTopButtonElement) {
+    return;
+  }
+
+  const updateScrollTopButtonVisibility = () => {
+    const windowScrollTop = window.scrollY || document.documentElement.scrollTop || 0;
+    const panelScrollTop = rightScrollElement ? rightScrollElement.scrollTop : 0;
+    const shouldShowButton = Math.max(windowScrollTop, panelScrollTop) > 220;
+
+    scrollTopButtonElement.classList.toggle('is-visible', shouldShowButton);
+  };
+
+  scrollTopButtonElement.addEventListener('click', () => {
+    if (rightScrollElement) {
+      rightScrollElement.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  window.addEventListener('scroll', updateScrollTopButtonVisibility, { passive: true });
+  window.addEventListener('resize', updateScrollTopButtonVisibility);
+
+  if (rightScrollElement) {
+    rightScrollElement.addEventListener('scroll', updateScrollTopButtonVisibility, { passive: true });
+  }
+
+  updateScrollTopButtonVisibility();
 }
 
 function isMobileViewport() {

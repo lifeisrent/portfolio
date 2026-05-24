@@ -324,12 +324,29 @@ body{font-family:'Noto Sans KR',sans-serif;background:#fff;color:#111;font-size:
 /* Component: Section Divider */
 .rs-divider{height:3px;background:#e8f0fe;margin:0;}
 
+/* Component: Scroll Top Button */
+.scroll-top-btn{
+  position:fixed;right:18px;bottom:22px;
+  width:48px;height:48px;border:none;border-radius:50%;
+  background:rgba(90,90,90,0.45);color:#fff;
+  font-size:22px;font-weight:900;line-height:1;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;z-index:120;
+  box-shadow:0 4px 14px rgba(0,0,0,0.25);
+  backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
+  opacity:0;transform:translateY(8px);pointer-events:none;
+  transition:opacity .2s,transform .2s,background .2s;
+}
+.scroll-top-btn:hover{background:rgba(90,90,90,0.62);}
+.scroll-top-btn.is-visible{opacity:1;transform:translateY(0);pointer-events:auto;}
+
 /* Responsive: Mobile */
 @media(max-width:768px){
   body{overflow-y:auto;}
   #layout{flex-direction:column;height:auto;overflow:visible;}
   .right-scroll{height:auto;overflow-y:visible;}
   .profile-panel{width:100% !important;padding:0 0 16px !important;gap:14px !important;border-bottom:none;}
+  .scroll-top-btn{right:14px !important;bottom:18px !important;width:44px !important;height:44px !important;font-size:20px !important;}
   .profile-top{flex-direction:row !important;flex-wrap:wrap !important;align-items:center !important;justify-content:flex-start !important;gap:12px !important;padding:0 !important;}
   .profile-mobile-title{display:block !important;flex:1 !important;font-size:19px !important;font-weight:800 !important;color:#fff !important;line-height:1.35 !important;text-align:left !important;}
   .profile-info{flex:0 0 calc(100% - 24px) !important;width:calc(100% - 24px) !important;align-items:flex-start !important;text-align:left !important;margin:6px 12px 0 !important;}
