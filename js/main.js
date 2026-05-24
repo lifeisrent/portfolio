@@ -71,12 +71,18 @@ function initializePortfolioPage() {
   renderJogCurrentPosition();
 }
 
+function isMobileViewport() {
+  return window.matchMedia('(max-width: 768px)').matches;
+}
+
 function renderProfilePanel() {
   const profilePanelElement = document.querySelector(PROFILE_PANEL_SELECTOR);
 
   if (!profilePanelElement || !profileData) {
     return;
   }
+
+  const isMobileProfileCardView = isMobileViewport();
 
   const profileCardsMarkup = profileData.cards
     .map((card) => {
@@ -106,6 +112,50 @@ function renderProfilePanel() {
       }
 
       const cardBodyText = card.lines.join(' ');
+      const cardBodyMarkup = card.lines.map((lineText) => `${lineText}`).join('<br>');
+
+      if (card.expandable && !card.inline) {
+        const detailMarkup = (card.details || [])
+          .map((detailText) => `<div>${detailText}</div>`)
+          .join('');
+
+        if (isMobileProfileCardView) {
+          return `
+            <div
+              class="p-card is-collapsible"
+              data-collapsible-card="true"
+              role="button"
+              tabindex="0"
+              aria-expanded="false"
+            >
+              <div class="p-card-head">
+                ${card.iconSvg}
+                <span>${card.title}</span>
+                <span class="p-card-toggle-icon" data-collapsible-icon="true">＋</span>
+              </div>
+              <div class="p-card-body">${cardBodyMarkup}</div>
+              <div class="p-card-detail" data-collapsible-detail="true" hidden>
+                ${detailMarkup}
+              </div>
+            </div>
+          `;
+        }
+
+        return `
+          <div class="p-card">
+            <div class="p-card-head">
+              ${card.iconSvg}
+              ${card.title}
+            </div>
+            <div class="p-card-body">
+              ${cardBodyMarkup}
+              <div class="p-card-detail">
+                ${detailMarkup}
+              </div>
+            </div>
+          </div>
+        `;
+      }
 
       if (card.inline) {
         if (card.expandable) {
@@ -144,8 +194,6 @@ function renderProfilePanel() {
           </div>
         `;
       }
-
-      const cardBodyMarkup = card.lines.map((lineText) => `${lineText}`).join('<br>');
 
       return `
         <div class="p-card">
