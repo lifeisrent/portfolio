@@ -43,10 +43,12 @@ const profileData = {
         },
         {
           label: '장비제어',
-          badges: ['드라이버 개발', '제어 프로그램 연동']
+          progress: 70,
+          badges: ['드라이버 개발', '제어프로그램 연동']
         },
         {
-          label: 'IT개발',
+          label: 'IT 개발',
+          progress: 70,
           badges: ['웹 API', 'ASP.NET']
         }
       ]

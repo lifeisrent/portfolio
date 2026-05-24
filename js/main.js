@@ -87,32 +87,44 @@ function renderProfilePanel() {
   const profileCardsMarkup = profileData.cards
     .map((card) => {
       if (card.skillGroups) {
+        const skillDetailMarkup = card.skillGroups
+          .map((skillGroup, index) => {
+            const hasProgress = typeof skillGroup.progress === 'number';
+            const badgeMarkup = (skillGroup.badges || [])
+              .map((badgeText) => `<span class="badge">${badgeText}</span>`)
+              .join('');
+
+            return `
+              <div class="skill-detail-group" style="${index === 0 ? '' : 'margin-top:10px;'}">
+                <div class="skill-row skill-row-progress">
+                  <span style="font-size:15px;font-weight:700;color:#555;white-space:nowrap;margin-right:2px;">${skillGroup.label} :</span>
+                  ${hasProgress ? `
+                    <div class="skill-progress-bar" aria-label="${skillGroup.label} 숙련도">
+                      <div class="skill-progress-fill" style="width:${skillGroup.progress}%;"></div>
+                    </div>
+                  ` : ''}
+                </div>
+                ${badgeMarkup ? `<div class="skill-row skill-row-badges">${badgeMarkup}</div>` : ''}
+              </div>
+            `;
+          })
+          .join('');
+
         return `
-          <div class="p-card">
+          <div
+            class="p-card is-collapsible"
+            data-collapsible-card="true"
+            role="button"
+            tabindex="0"
+            aria-expanded="false"
+          >
             <div class="p-card-head">
               ${card.iconSvg}
-              ${card.title}
+              <span>${card.title}</span>
+              <span class="p-card-toggle-icon" data-collapsible-icon="true">＋</span>
             </div>
-            <div class="p-card-body">
-              ${card.skillGroups
-                .map((skillGroup, index) => {
-                  const hasProgress = typeof skillGroup.progress === 'number';
-                  const badgeMarkup = (skillGroup.badges || [])
-                    .map((badgeText) => `<span class="badge">${badgeText}</span>`)
-                    .join('');
-
-                  return `
-                    <div class="skill-row" style="${index === 0 ? 'align-items:center;' : 'margin-top:6px;align-items:center;'}">
-                      <span style="font-size:15px;font-weight:700;color:#555;white-space:nowrap;margin-right:2px;">${skillGroup.label} :</span>
-                      ${hasProgress ? `
-                        <div class="skill-progress-bar" aria-label="${skillGroup.label} 숙련도">
-                          <div class="skill-progress-fill" style="width:${skillGroup.progress}%;"></div>
-                        </div>
-                      ` : badgeMarkup}
-                    </div>
-                  `;
-                })
-                .join('')}
+            <div class="p-card-detail skill-detail" data-collapsible-detail="true" hidden>
+              ${skillDetailMarkup}
             </div>
           </div>
         `;
