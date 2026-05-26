@@ -389,7 +389,8 @@ function getOrderedProjects() {
   const preferredProjectOrder = [
     'cleanroom-environment-solution',
     'motion-control',
-    'autonomous-driving'
+    'autonomous-driving',
+    'industrial-maintenance-automation'
   ];
   const orderIndexById = new Map(
     preferredProjectOrder.map((projectId, projectIndex) => [projectId, projectIndex])
@@ -494,6 +495,14 @@ function renderProjectLayout(project) {
       ${renderProjectBanner(project)}
       <div class="rs-block">${projectDetailCardMarkup}</div>
       ${renderCleanroomEnvironmentSection(project)}
+    `;
+  }
+
+  if (project.layoutType === 'industrialAutomation') {
+    return `
+      ${renderProjectBanner(project)}
+      <div class="rs-block">${projectDetailCardMarkup}</div>
+      ${renderIndustrialAutomationSection(project)}
     `;
   }
 
@@ -1140,6 +1149,83 @@ function renderCleanroomEnvironmentSection(project) {
           <div class="cleanroom-node">Gateway 서버</div>
           <div class="cleanroom-arrow">→</div>
           <div class="cleanroom-node">외부 노트북/핸드폰</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rs-block cleanroom-section cleanroom-section-last">
+      <div class="rs-section-title">⚙ 구현 내용</div>
+      <div class="cleanroom-grid">
+        ${implementationCardsMarkup}
+      </div>
+    </div>
+  `;
+}
+
+function renderIndustrialAutomationSection(project) {
+  const industrialContent = project.industrialAutomationContent || {};
+  const problemLines = industrialContent.problemLines || [];
+  const solutionIntro = industrialContent.solutionIntro || '';
+  const solutionSteps = industrialContent.solutionSteps || [];
+  const implementationItems = industrialContent.implementationItems || [];
+
+  const problemDescription = problemLines[0] || '';
+  const problemSubLines = problemLines.slice(1);
+  const solutionStepsMarkup = solutionSteps.map((step) => `<li>${step}</li>`).join('');
+  const solutionIntroMarkup = solutionIntro ? `<p class="cleanroom-desc">${solutionIntro}</p>` : '';
+
+  const implementationCardsMarkup = implementationItems
+    .map((item) => {
+      const titleText = item.title || '';
+      const detailList = item.details || [];
+      const detailListMarkup = detailList.length
+        ? `
+          <ul class="cleanroom-feature-sublist">
+            ${detailList.map((detailText) => `<li>${detailText}</li>`).join('')}
+          </ul>
+        `
+        : '';
+
+      return `
+        <article class="cleanroom-feature-card">
+          <h4 class="cleanroom-feature-title">${titleText}</h4>
+          ${detailListMarkup}
+        </article>
+      `;
+    })
+    .join('');
+
+  return `
+    <div class="rs-block cleanroom-section">
+      <div class="rs-section-title">📌 문제 상황</div>
+      <div class="cleanroom-card">
+        <h3 class="cleanroom-title">문제 상황</h3>
+        <p class="cleanroom-desc">${problemDescription}</p>
+        ${problemSubLines.map((lineText) => `<p class="cleanroom-desc">${lineText}</p>`).join('')}
+        <div class="cleanroom-diagram">
+          <div class="cleanroom-node">운영 PC</div>
+          <div class="cleanroom-arrow">→</div>
+          <div class="cleanroom-node">전용 프로그램</div>
+          <div class="cleanroom-arrow">→</div>
+          <div class="cleanroom-node">장비/센서</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rs-block cleanroom-section">
+      <div class="rs-section-title">🔧 해결 방향</div>
+      <div class="cleanroom-card">
+        <h3 class="cleanroom-title">해결 방향</h3>
+        ${solutionIntroMarkup}
+        <ol class="cleanroom-feature-list">
+          ${solutionStepsMarkup}
+        </ol>
+        <div class="cleanroom-diagram">
+          <div class="cleanroom-node">운영자 UI</div>
+          <div class="cleanroom-arrow">→</div>
+          <div class="cleanroom-node">직접 통신 모듈</div>
+          <div class="cleanroom-arrow">→</div>
+          <div class="cleanroom-node">산업 장비</div>
         </div>
       </div>
     </div>
